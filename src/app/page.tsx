@@ -15,10 +15,11 @@ export default function Home() {
     textColor: string,
     icon: string
   }
+
   const menuDb: cardMenu[] = [
     {
       id: 1,
-      label: 'Informações de Vôo',
+      label: 'Informações sobre voos',
       backgroundColor: '#1C1611',
       textColor: '#D0DF00',
       icon: airplaneIcon
@@ -53,6 +54,7 @@ export default function Home() {
     },
 
   ]
+
   return (
     <div>
 
@@ -64,10 +66,85 @@ export default function Home() {
           alignItems: "center",
           justifyContent: "center",
           backgroundColor: "#F3F2F2",
-          marginTop: "15vh",
-          padding: '6vh 3vw '
+          marginTop: "12vh",
+          padding: '0 7vw',
+          height: '78vh'
         }}
       >
+        <Box sx={{
+          marginBottom: '4vh',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: "center",
+        }}>
+          <Typography variant="h5" fontWeight={'bold'} sx={{
+            fontFamily: poppins.style.fontFamily, fontWeight: 800
+          }}>
+            Bem-vindo!
+          </Typography>
+          <Typography variant="subtitle1" sx={{
+            fontFamily: poppins.style.fontFamily, fontWeight: 400,
+            color: '#000000CC'
+          }} >
+            Como podemos ajuda-lo?
+          </Typography>
+        </Box>
+
+
+        <Grid
+          container
+          spacing={2}
+          sx={{
+            maxWidth: "600px",
+          }}
+        >
+          <Grid item xs={8}>
+            <CardMenu
+              label={menuDb[0].label}
+              backgroundColor={menuDb[0].backgroundColor}
+              textColor={menuDb[0].textColor}
+              icon={menuDb[0].icon}
+              size='large'
+            />
+          </Grid>
+          <Grid item xs={4}>
+            <CardMenu
+              label={menuDb[1].label}
+              backgroundColor={menuDb[1].backgroundColor}
+              textColor={menuDb[1].textColor}
+              icon={menuDb[1].icon}
+
+            />
+          </Grid>
+          <Grid item xs={4}>
+            <CardMenu
+              label={menuDb[2].label}
+              backgroundColor={menuDb[2].backgroundColor}
+              textColor={menuDb[2].textColor}
+              icon={menuDb[2].icon}
+
+            />
+          </Grid>
+          <Grid item xs={8}>
+            <CardMenu
+              label={menuDb[3].label}
+              backgroundColor={menuDb[3].backgroundColor}
+              textColor={menuDb[3].textColor}
+              icon={menuDb[3].icon}
+              size='large'
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <CardMenu
+              label={menuDb[4].label}
+              backgroundColor={menuDb[4].backgroundColor}
+              textColor={menuDb[4].textColor}
+              icon={menuDb[4].icon}
+              size="medium"
+            />
+          </Grid>
+        </Grid>
+
       </Box>
       <Bar type='footer' />
     </div>
