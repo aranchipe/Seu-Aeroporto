@@ -13,5 +13,5 @@ export const roboto_mono = Roboto_Mono({
 export const poppins = Poppins({
     subsets: ['latin'],
     display: 'swap',
-    weight: ['400', '100', '200', '500']
+    weight: ['100', '200', '300', '400', '500', '600', '800']
 })

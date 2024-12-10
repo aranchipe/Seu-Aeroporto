@@ -5,6 +5,7 @@ import Image from "next/image";
 import CardMenu from "@/components/CardMenu";
 import airplaneIcon from '../assets/aviao.svg'
 import { inter, roboto_mono, poppins } from '@/app/fonts'
+import Link from "next/link";
 
 
 export default function Home() {
@@ -13,7 +14,8 @@ export default function Home() {
     label: string
     backgroundColor: string
     textColor: string,
-    icon: string
+    icon: string,
+    ref: string
   }
 
   const menuDb: cardMenu[] = [
@@ -22,43 +24,51 @@ export default function Home() {
       label: 'Informações sobre voos',
       backgroundColor: '#1C1611',
       textColor: '#D0DF00',
-      icon: airplaneIcon
+      icon: airplaneIcon,
+      ref: 'rota1'
     },
     {
       id: 2,
       label: 'Restaurantes',
       backgroundColor: '#E30026',
       textColor: '#FFFFFF',
-      icon: 'https://storage.googleapis.com/media.landbot.io/79288/chats/494a361c-2ddc-48ff-8dd7-f4e121043d68/HKUG6Y853KVLNTAHIDE3EAJ2BNCQKK8B.svg'
+      icon: 'https://storage.googleapis.com/media.landbot.io/79288/chats/494a361c-2ddc-48ff-8dd7-f4e121043d68/HKUG6Y853KVLNTAHIDE3EAJ2BNCQKK8B.svg',
+      ref: 'rota2'
     },
     {
       id: 3,
       label: 'Lojas & Serviços',
       backgroundColor: '#52C2DE',
       textColor: '#FFFFFF',
-      icon: 'https://storage.googleapis.com/media.landbot.io/79288/chats/494a361c-2ddc-48ff-8dd7-f4e121043d68/ECUMES944WFBRT8L2JLZDH72U6R3PYFT.svg'
+      icon: 'https://storage.googleapis.com/media.landbot.io/79288/chats/494a361c-2ddc-48ff-8dd7-f4e121043d68/ECUMES944WFBRT8L2JLZDH72U6R3PYFT.svg',
+      ref: 'rota3'
     },
     {
       id: 4,
       label: 'Mapa do Aeroporto',
       backgroundColor: '#004489',
       textColor: '#FFFFFF',
-      icon: 'https://storage.googleapis.com/media.landbot.io/79288/chats/494a361c-2ddc-48ff-8dd7-f4e121043d68/29YCRU0R1LCLDXPRUOU21069SZR2FBXJ.svg'
+      icon: 'https://storage.googleapis.com/media.landbot.io/79288/chats/494a361c-2ddc-48ff-8dd7-f4e121043d68/29YCRU0R1LCLDXPRUOU21069SZR2FBXJ.svg',
+      ref: 'rota4'
     },
     {
       id: 5,
       label: 'Atendente Virtual',
       backgroundColor: '#8467F4',
       textColor: '#FFFFFF',
-      icon: 'https://storage.googleapis.com/media.landbot.io/79288/chats/494a361c-2ddc-48ff-8dd7-f4e121043d68/SM1AJXTYWP2KU6OHUYDZ58IUIJKF4F21.svg'
+      icon: 'https://storage.googleapis.com/media.landbot.io/79288/chats/494a361c-2ddc-48ff-8dd7-f4e121043d68/SM1AJXTYWP2KU6OHUYDZ58IUIJKF4F21.svg',
+      ref: 'rota5'
     },
 
   ]
 
+  const handlePage = (path: string) => {
+
+  }
+
   return (
     <div>
 
-      <Bar type='header' />
       <Box
         sx={{
           display: "flex",
@@ -68,7 +78,7 @@ export default function Home() {
           backgroundColor: "#F3F2F2",
           marginTop: "12vh",
           padding: '0 7vw',
-          height: '78vh'
+          minHeight: '78vh'
         }}
       >
         <Box sx={{
@@ -106,6 +116,7 @@ export default function Home() {
               icon={menuDb[0].icon}
               size='large'
             />
+
           </Grid>
           <Grid item xs={4}>
             <CardMenu
@@ -144,9 +155,7 @@ export default function Home() {
             />
           </Grid>
         </Grid>
-
       </Box>
-      <Bar type='footer' />
     </div>
   );
 }

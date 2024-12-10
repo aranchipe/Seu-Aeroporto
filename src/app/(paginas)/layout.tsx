@@ -1,19 +1,20 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import "./globals.css";
+import "../globals.css";
 import Bar from "@/components/Bar";
+import NavigationHeader from "@/components/NavigationHeader";
 
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
+/* const geistSans = localFont({
+  src: "../fonts/GeistVF.woff",
   variable: "--font-geist-sans",
   weight: "100 900",
 });
 const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
+  src: "../fonts/GeistMonoVF.woff",
   variable: "--font-geist-mono",
   weight: "100 900",
-});
+}); */
 
 
 export const metadata: Metadata = {
@@ -27,13 +28,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} `}>
-        <Bar type="header" />
-        {children}
-        <Bar type="footer" />
+    <>
+      <NavigationHeader label='Teste' backgroundColor="red" />
+      {children}
+    </>
 
-      </body>
-    </html>
   );
 }
