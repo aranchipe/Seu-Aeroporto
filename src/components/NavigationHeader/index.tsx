@@ -2,6 +2,7 @@ import { Box, Typography } from "@mui/material"
 import React from "react"
 import Image from "next/image";
 import { poppins } from '@/app/fonts'
+import { useRouter } from "next/navigation";
 
 
 interface CardMenuProps {
@@ -11,7 +12,10 @@ interface CardMenuProps {
 
 
 const NavigationHeader: React.FC<CardMenuProps> = ({ label, backgroundColor }) => {
+
     const returnArrow = 'https://storage.googleapis.com/media.landbot.io/79288/chats/494a361c-2ddc-48ff-8dd7-f4e121043d68/ATHD8AK3EPHWXHJ6AIZDP2JSYCADG298.svg'
+    const router = useRouter()
+
     return (
         <Box sx={{
             width: '100vw',
@@ -28,10 +32,10 @@ const NavigationHeader: React.FC<CardMenuProps> = ({ label, backgroundColor }) =
 
                 marginRight: { xs: '4vw', sm: '1.5vw' },
             }}>
-                <Image src={returnArrow} alt='return' width={20} height={20} />
+                <Image style={{ cursor: 'pointer' }} src={returnArrow} alt='return' width={20} height={20} onClick={() => router.push('/')} />
 
             </Box>
-            <Typography variant="h5" sx={{
+            <Typography sx={{
                 fontFamily: poppins.style.fontFamily, fontWeight: 500
             }}>
                 {label}

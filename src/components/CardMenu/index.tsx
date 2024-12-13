@@ -10,10 +10,11 @@ interface CardMenuProps {
     textColor: string
     icon: string
     size?: string
+    onClick?: () => void
 }
 
-const CardMenu: React.FC<CardMenuProps> = ({ label, backgroundColor, textColor, icon, size }) => {
-    return <Box sx={{
+const CardMenu: React.FC<CardMenuProps> = ({ label, backgroundColor, textColor, icon, size, onClick }) => {
+    return <Box onClick={onClick} sx={{
         display: 'flex',
         flexDirection: size !== 'medium' ? 'column' : 'row-reverse',
         justifyContent: size === 'medium' ? 'space-between' : '',
