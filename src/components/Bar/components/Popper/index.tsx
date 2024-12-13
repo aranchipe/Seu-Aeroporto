@@ -3,9 +3,9 @@ import * as React from 'react';
 import { Popper } from '@mui/base/Popper';
 import { styled, css } from '@mui/system';
 import Image from "next/image";
-import portuguese from '../../../../assets/portuguese.png'
-import spain from '../../../../assets/spain.png'
-import english from '../../../../assets/english.png'
+import portuguese from '../../../../../public/assets/portuguese.png'
+import spain from '../../../../../public/assets/spain.png'
+import english from '../../../../../public/assets/english.png'
 import { Button, IconButton, Menu, MenuItem, Typography } from '@mui/material';
 
 export default function SimplePopper() {

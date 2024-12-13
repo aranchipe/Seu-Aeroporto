@@ -1,74 +1,90 @@
-import styles from "./page.module.css";
-import Bar from '../components/Bar'
+'use client'
 import { Box, Grid, Typography } from "@mui/material";
-import Image from "next/image";
 import CardMenu from "@/components/CardMenu";
-import airplaneIcon from '../assets/aviao.svg'
-import { inter, roboto_mono, poppins } from '@/app/fonts'
+import { poppins } from '@/app/fonts'
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import axios from "@/services/axios";
+import Image from "next/image";
+import airplaneIcon from '../assets/aviao.svg'
 
+interface cardMenuProps {
+  id: number
+  label: string
+  backgroundColor: string
+  textColor: string,
+  icon: string,
+  ref: string
+}
 
 export default function Home() {
-  interface cardMenu {
-    id: number
-    label: string
-    backgroundColor: string
-    textColor: string,
-    icon: string,
-    ref: string
-  }
 
-  const menuDb: cardMenu[] = [
-    {
-      id: 1,
-      label: 'Informações sobre voos',
-      backgroundColor: '#1C1611',
-      textColor: '#D0DF00',
-      icon: airplaneIcon,
-      ref: 'rota1'
-    },
-    {
-      id: 2,
-      label: 'Restaurantes',
-      backgroundColor: '#E30026',
-      textColor: '#FFFFFF',
-      icon: 'https://storage.googleapis.com/media.landbot.io/79288/chats/494a361c-2ddc-48ff-8dd7-f4e121043d68/HKUG6Y853KVLNTAHIDE3EAJ2BNCQKK8B.svg',
-      ref: 'rota2'
-    },
-    {
-      id: 3,
-      label: 'Lojas & Serviços',
-      backgroundColor: '#52C2DE',
-      textColor: '#FFFFFF',
-      icon: 'https://storage.googleapis.com/media.landbot.io/79288/chats/494a361c-2ddc-48ff-8dd7-f4e121043d68/ECUMES944WFBRT8L2JLZDH72U6R3PYFT.svg',
-      ref: 'rota3'
-    },
-    {
-      id: 4,
-      label: 'Mapa do Aeroporto',
-      backgroundColor: '#004489',
-      textColor: '#FFFFFF',
-      icon: 'https://storage.googleapis.com/media.landbot.io/79288/chats/494a361c-2ddc-48ff-8dd7-f4e121043d68/29YCRU0R1LCLDXPRUOU21069SZR2FBXJ.svg',
-      ref: 'rota4'
-    },
-    {
-      id: 5,
-      label: 'Atendente Virtual',
-      backgroundColor: '#8467F4',
-      textColor: '#FFFFFF',
-      icon: 'https://storage.googleapis.com/media.landbot.io/79288/chats/494a361c-2ddc-48ff-8dd7-f4e121043d68/SM1AJXTYWP2KU6OHUYDZ58IUIJKF4F21.svg',
-      ref: 'rota5'
-    },
+  const [menuData, setMenuData] = useState<cardMenuProps[] | null>(null)
 
-  ]
+  /*   const menuDb: cardMenuProps[] = [
+      {
+        id: 1,
+        label: 'Informações de Vôo',
+        backgroundColor: '#1C1611',
+        textColor: '#D0DF00',
+        icon: 'https://storage.googleapis.com/media.landbot.io/79288/chats/494a361c-2ddc-48ff-8dd7-f4e121043d68/HKUG6Y853KVLNTAHIDE3EAJ2BNCQKK8B.svg',
+        ref: '/flights'
+      },
+      {
+        id: 2,
+        label: 'Restaurantes',
+        backgroundColor: '#E30026',
+        textColor: '#FFFFFF',
+        icon: 'https://storage.googleapis.com/media.landbot.io/79288/chats/494a361c-2ddc-48ff-8dd7-f4e121043d68/HKUG6Y853KVLNTAHIDE3EAJ2BNCQKK8B.svg',
+        ref: '/flights'
+  
+      },
+      {
+        id: 3,
+        label: 'Lojas & Serviços',
+        backgroundColor: '#52C2DE',
+        textColor: '#FFFFFF',
+        icon: 'https://storage.googleapis.com/media.landbot.io/79288/chats/494a361c-2ddc-48ff-8dd7-f4e121043d68/ECUMES944WFBRT8L2JLZDH72U6R3PYFT.svg',
+        ref: '/flights'
+  
+      },
+      {
+        id: 4,
+        label: 'Mapa do Aeroporto',
+        backgroundColor: '#004489',
+        textColor: '#FFFFFF',
+        icon: 'https://storage.googleapis.com/media.landbot.io/79288/chats/494a361c-2ddc-48ff-8dd7-f4e121043d68/29YCRU0R1LCLDXPRUOU21069SZR2FBXJ.svg',
+        ref: '/flights'
+  
+      },
+      {
+        id: 5,
+        label: 'Atendente Virtual',
+        backgroundColor: '#8467F4',
+        textColor: '#FFFFFF',
+        icon: 'https://storage.googleapis.com/media.landbot.io/79288/chats/494a361c-2ddc-48ff-8dd7-f4e121043d68/SM1AJXTYWP2KU6OHUYDZ58IUIJKF4F21.svg',
+        ref: '/flights'
+  
+      },
+    ] */
 
-  const handlePage = (path: string) => {
+  useEffect(() => {
+    handlePage();
+  }, []);
 
-  }
+  const handlePage = async () => {
+    try {
+      const menu: cardMenuProps[] = (await axios.get("/menu")).data;
+      setMenuData(menu);
+
+    } catch (error) {
+      console.error("Erro ao buscar menu:", error);
+    }
+  };
+
 
   return (
     <div>
-
       <Box
         sx={{
           display: "flex",
@@ -108,52 +124,24 @@ export default function Home() {
             maxWidth: "600px",
           }}
         >
-          <Grid item xs={8}>
-            <CardMenu
-              label={menuDb[0].label}
-              backgroundColor={menuDb[0].backgroundColor}
-              textColor={menuDb[0].textColor}
-              icon={menuDb[0].icon}
-              size='large'
-            />
-
-          </Grid>
-          <Grid item xs={4}>
-            <CardMenu
-              label={menuDb[1].label}
-              backgroundColor={menuDb[1].backgroundColor}
-              textColor={menuDb[1].textColor}
-              icon={menuDb[1].icon}
-
-            />
-          </Grid>
-          <Grid item xs={4}>
-            <CardMenu
-              label={menuDb[2].label}
-              backgroundColor={menuDb[2].backgroundColor}
-              textColor={menuDb[2].textColor}
-              icon={menuDb[2].icon}
-
-            />
-          </Grid>
-          <Grid item xs={8}>
-            <CardMenu
-              label={menuDb[3].label}
-              backgroundColor={menuDb[3].backgroundColor}
-              textColor={menuDb[3].textColor}
-              icon={menuDb[3].icon}
-              size='large'
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <CardMenu
-              label={menuDb[4].label}
-              backgroundColor={menuDb[4].backgroundColor}
-              textColor={menuDb[4].textColor}
-              icon={menuDb[4].icon}
-              size="medium"
-            />
-          </Grid>
+          {menuData?.map((item) => (
+            <Grid item xs={
+              item.ref === '/flights' ? 8
+                : item.ref === '/restaurants' ? 4
+                  : item.ref === '/services' ? 4
+                    : item.ref === '/map' ? 8 : 12
+            }>
+              <Link href={item.ref}>
+                <CardMenu
+                  label={item.label}
+                  backgroundColor={item.backgroundColor}
+                  textColor={item.textColor}
+                  icon={item.icon}
+                  size={item.ref === '/flights' || item.ref === '/map' ? 'large' : item.ref === '/chatbot' ? 'medium' : ''}
+                />
+              </Link>
+            </Grid>
+          ))}
         </Grid>
       </Box>
     </div>
