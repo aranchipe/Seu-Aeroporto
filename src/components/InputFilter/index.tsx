@@ -3,15 +3,18 @@ import InputAdornment from '@mui/material/InputAdornment';
 import TextField from '@mui/material/TextField';
 import lupa from '../../../public/assets/lupa.svg'
 import Image from 'next/image';
+import { EntitiesProps } from '@/app/(paginas)/[path]/page';
+
 
 
 interface InputFilterProps {
-    setCurrentFlights: React.Dispatch<React.SetStateAction<Flight[]>>;
+    setState: React.Dispatch<React.SetStateAction<any>>;
     placeholder: string;
-    totalFlights: Flight[];
+    totalData: Flight[] | EntitiesProps[] | null;
+    propFilter: string
 }
 
-interface Flight {
+export interface Flight {
     id: string;
     time: string;
     destination: string;
@@ -23,15 +26,27 @@ interface Flight {
     mapLink: string;
 }
 
-const InputFilter: React.FC<InputFilterProps> = ({ placeholder, setCurrentFlights, totalFlights }) => {
+
+const InputFilter: React.FC<InputFilterProps> = ({ placeholder, setState, totalData, propFilter }) => {
 
     const handleChange: any = (e: React.KeyboardEvent<HTMLInputElement>) => {
         const { value } = e.target as HTMLInputElement;
 
-        const filteredFlights: Flight[] = totalFlights.filter((flight: Flight) => {
-            return flight.number.toLowerCase().includes(value.toLowerCase().trim())
-        })
-        setCurrentFlights(filteredFlights);
+        const normalizeString = (str: string) => {
+            return str
+                .normalize('NFD') // Normaliza a string para decompor caracteres com acentos
+                .replace(/[\u0300-\u036f]/g, '') // Remove os acentos
+                .toLowerCase() // Converte tudo para minúsculas
+                .replace(/\s+/g, ' ') // Substitui múltiplos espaços por um único espaço
+                .trim(); // Remove espaços extras no começo e no fim
+        };
+
+        const filteredData: any = totalData && totalData.filter((item: any) => {
+            // Normaliza tanto o valor de busca quanto o campo do item
+            return normalizeString(item[`${propFilter}`]).includes(normalizeString(value));
+        });
+
+        setState(filteredData)
     }
 
 
