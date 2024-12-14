@@ -25,17 +25,6 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     },
 }));
 
-/* interface currentFlightsProps {
-    id: string
-    time: string
-    destination: string
-    number: string
-    airlineName: string
-    airlineLogo: string
-    status: string
-    gate: string
-    mapLink: string
-} */
 
 const FlightsTable: React.FC<any> = ({ currentFlights }) => {
 

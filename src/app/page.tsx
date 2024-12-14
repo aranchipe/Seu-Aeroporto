@@ -14,7 +14,8 @@ interface cardMenuProps {
   backgroundColor: string
   textColor: string,
   icon: string,
-  ref: string
+  ref: string,
+  order: number
 }
 
 export default function Home() {
@@ -69,12 +70,15 @@ export default function Home() {
     ] */
 
   useEffect(() => {
-    handlePage();
+    handleMenuData();
   }, []);
 
-  const handlePage = async () => {
+  const handleMenuData = async () => {
     try {
-      const menu: cardMenuProps[] = (await axios.get("/menu")).data;
+      const menu: cardMenuProps[] = (await axios.get("/menu")).data.sort((a: cardMenuProps, b: cardMenuProps) => {
+        return a.order - b.order
+      })
+
       setMenuData(menu);
 
     } catch (error) {
