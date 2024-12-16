@@ -8,14 +8,16 @@ import { Box, Typography } from '@mui/material';
 import { EntitiesProps } from '@/app/(paginas)/[path]/page'
 import Image from 'next/image';
 import { poppins } from '@/app/fonts';
+import Link from 'next/link';
 
 
 interface RestaurantsTableProps {
     entitiesState: EntitiesProps[] | null;
+    path: string
 }
 
 
-const EntitiesTable: React.FC<RestaurantsTableProps> = ({ entitiesState }) => {
+const EntitiesTable: React.FC<RestaurantsTableProps> = ({ entitiesState, path }) => {
 
 
     return (
@@ -42,7 +44,9 @@ const EntitiesTable: React.FC<RestaurantsTableProps> = ({ entitiesState }) => {
                                     <Typography sx={{
                                         fontFamily: poppins.style.fontFamily, fontWeight: 600,
                                     }} >
-                                        {entity.name}
+                                        <Link href={`/${path}/${entity.name}`}>
+                                            {entity.name}
+                                        </Link>
                                     </Typography>
                                     <Typography sx={{
 

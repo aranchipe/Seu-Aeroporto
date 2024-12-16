@@ -1,26 +1,44 @@
 import { Box, Typography } from "@mui/material"
-import React from "react"
+import React, { useEffect, useState } from "react"
 import Image from "next/image";
 import { poppins } from '@/app/fonts'
 import { useRouter } from "next/navigation";
+import { MenuProps } from "@/app/(paginas)/[path]/page";
+import axios from "@/services/axios";
 
 
-interface CardMenuProps {
-    label: string
-    backgroundColor: string
-}
 
-
-const NavigationHeader: React.FC<CardMenuProps> = ({ label, backgroundColor }) => {
+const NavigationHeader: React.FC<{ path: string, label?: string }> = ({ path, label }) => {
 
     const returnArrow = 'https://storage.googleapis.com/media.landbot.io/79288/chats/494a361c-2ddc-48ff-8dd7-f4e121043d68/ATHD8AK3EPHWXHJ6AIZDP2JSYCADG298.svg'
     const router = useRouter()
+    const [menuData, setMenuData] = useState<MenuProps | null>(null)
+
+    useEffect(() => {
+        handleNavigationHeader(path);
+
+    }, [])
+
+    const handleNavigationHeader = async (path: string) => {
+        try {
+            const menu: MenuProps[] = (await axios.get("/menu")).data;
+
+            const currentPage = menu.find((item) => {
+                return item.ref === `/${path}`;
+            }) || null;
+
+            setMenuData(currentPage);
+
+        } catch (error) {
+            console.error("Erro ao buscar menu:", error);
+        }
+    };
 
     return (
         <Box sx={{
             width: '100vw',
             height: '6vh',
-            backgroundColor: backgroundColor,
+            backgroundColor: menuData?.backgroundColor,
             position: 'fixed',
             top: '12vh',
             display: "flex",
@@ -38,7 +56,8 @@ const NavigationHeader: React.FC<CardMenuProps> = ({ label, backgroundColor }) =
             <Typography sx={{
                 fontFamily: poppins.style.fontFamily, fontWeight: 500
             }}>
-                {label}
+
+                {label ? label : menuData?.label}
             </Typography>
 
         </Box>
