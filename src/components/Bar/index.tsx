@@ -6,7 +6,7 @@ import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import { Typography } from '@mui/material';
 import { poppins } from '@/app/fonts'
-import SimplePopper from './components/Popper';
+import SimplePopper from '../PopperLanguage';
 import { format } from 'date-fns'
 import { ptBR } from 'date-fns/locale';
 

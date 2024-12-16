@@ -3,21 +3,36 @@ import * as React from 'react';
 import { Popper } from '@mui/base/Popper';
 import { styled, css } from '@mui/system';
 import Image from "next/image";
-import portuguese from '../../../../../public/assets/portuguese.png'
-import spain from '../../../../../public/assets/spain.png'
-import english from '../../../../../public/assets/english.png'
+import portuguese from '../../../public/assets/portuguese.png'
+import spain from '../../../public/assets/spain.png'
+import english from '../../../public/assets/english.png'
 import { Button, IconButton, Menu, MenuItem, Typography } from '@mui/material';
+import { useTranslation } from 'react-i18next';
+import { useRouter } from 'next/navigation';
 
 export default function SimplePopper() {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+    const { i18n } = useTranslation();
+    const router = useRouter();
+
+    React.useEffect(() => {
+        const savedLocale = localStorage.getItem('i18nextLng');
+        if (savedLocale) {
+            i18n.changeLanguage(savedLocale);
+        }
+    }, [i18n]);
+
+
 
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(anchorEl ? null : event.currentTarget);
     };
 
-    const createHandleMenuClick = (menuItem: string) => {
+    const changeLanguage = (lng: string) => {
         return () => {
-            console.log(`Clicked on ${menuItem}`);
+            i18n.changeLanguage(lng);
+            localStorage.setItem('i18nextLng', lng); // Salva o idioma no localStorage
+            router.refresh();  // Recarrega a página para aplicar as mudanças de idioma
         };
     };
 
@@ -51,7 +66,7 @@ export default function SimplePopper() {
 
             <Popper id={id} open={open} anchorEl={anchorEl} placement='auto'>
                 <StyledPopperDiv>
-                    <MenuItem onClick={createHandleMenuClick('Profile')} sx={{}}>
+                    <MenuItem onClick={changeLanguage('pt')}>
                         <Image
                             style={{ marginRight: '7%' }}
                             width={30}
@@ -62,7 +77,7 @@ export default function SimplePopper() {
                             Português
                         </Typography>
                     </MenuItem>
-                    <MenuItem onClick={createHandleMenuClick('Language settings')}>
+                    <MenuItem onClick={changeLanguage('en')}>
                         <Image
                             style={{ marginRight: '7%' }}
                             width={30}
@@ -73,7 +88,7 @@ export default function SimplePopper() {
                             Español
                         </Typography>
                     </MenuItem>
-                    <MenuItem onClick={createHandleMenuClick('Log out')}>
+                    <MenuItem onClick={changeLanguage('es')}>
                         <Image
                             style={{ marginRight: '7%' }}
                             width={30}

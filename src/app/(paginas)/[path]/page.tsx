@@ -13,7 +13,7 @@ import EntitiesTable from "@/components/EntitiesTable";
 import SegmentButton from "@/components/SegmentButton";
 
 
-interface MenuProps {
+export interface MenuProps {
     _id: string
     label: string
     ref: string
@@ -53,7 +53,7 @@ export interface EntitiesProps {
 
 const Page: React.FC = () => {
     const params = useParams();
-    const path = params?.path
+    const path = params.path
     const [menuData, setMenuData] = useState<MenuProps | null>(null)
     const [segments, setSegments] = useState<string | null>('lojas')
 
@@ -71,7 +71,7 @@ const Page: React.FC = () => {
 
     useEffect(() => {
 
-        handleNavigationHeader(String(path));
+        /* handleNavigationHeader(String(path)); */
         if (path === 'restaurants') {
             listRestaurants()
         } else if (path === 'services') {
@@ -82,13 +82,12 @@ const Page: React.FC = () => {
                 listStories()
             }
         }
-        /* setSegments('lojas') */
 
     }, [path, segments]);
 
 
 
-    const handleNavigationHeader = async (path: string) => {
+    /* const handleNavigationHeader = async (path: string) => {
         try {
             const menu: MenuProps[] = (await axios.get("/menu")).data;
 
@@ -101,7 +100,7 @@ const Page: React.FC = () => {
         } catch (error) {
             console.error("Erro ao buscar menu:", error);
         }
-    };
+    }; */
 
     const listRestaurants = async () => {
         console.log('entrou na funcao de listar restaurantes')
@@ -154,7 +153,7 @@ const Page: React.FC = () => {
 
     return (
         <Box>
-            <NavigationHeader label={menuData?.label || ''} backgroundColor={menuData?.backgroundColor || ''} />
+            <NavigationHeader path={String(path)} />
             <Box
                 sx={{
                     marginTop: "18vh",
@@ -186,7 +185,7 @@ const Page: React.FC = () => {
                                     totalData={totalRestaurants}
                                     setState={setRestaurantsState}
                                     placeholder='Busque um estabelecimento. Ex:. Spolleto' />
-                                <EntitiesTable entitiesState={restaurantsState} />
+                                <EntitiesTable path={path} entitiesState={restaurantsState} />
                             </Box>
                             :
                             path === 'services'
@@ -204,19 +203,15 @@ const Page: React.FC = () => {
 
                                             <SegmentButton label='Services' setSegments={setSegments} segments={segments} />
                                         </Grid>
-                                        {/* <SegmentButton buttonOption='services' setSegments={setSegments} segments={segments} /> */}
 
                                     </Grid>
-
-
-
                                     <InputFilter
                                         propFilter={'name'}
                                         totalData={segments === 'lojas' ? totalStore : totalServices}
                                         setState={segments === 'lojas' ? setStoreState : setServicesState}
                                         placeholder='Busque um estabelecimento. Ex:. Spolleto'
                                     />
-                                    <EntitiesTable entitiesState={segments === 'lojas' ? storeState : servicesState} />
+                                    <EntitiesTable path={path} entitiesState={segments === 'lojas' ? storeState : servicesState} />
                                 </Box>
                                 :
                                 ''

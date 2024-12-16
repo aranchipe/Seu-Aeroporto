@@ -1,13 +1,20 @@
 import { NextResponse } from "next/server";
 import connect from "@/database/connection";
 
-export async function GET() {
+export async function GET(
+    req: Request,
+    { params }: {
+        params: {
+            entityName: string
+        }
+    }
+) {
     const { db } = await connect()
-
+    const { entityName } = params
     try {
         const collection = db.collection("entidade");
-        const data = await collection.find({}).toArray();
-        return NextResponse.json(data);
+        const data = await collection.find({ name: entityName }).toArray();
+        return NextResponse.json(data[0]);
 
     } catch (error) {
         console.error("Erro ao buscar dados:", error);

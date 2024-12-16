@@ -5,8 +5,7 @@ import { poppins } from '@/app/fonts'
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import axios from "@/services/axios";
-import Image from "next/image";
-import airplaneIcon from '../assets/aviao.svg'
+import { useTranslation } from 'react-i18next';
 
 interface cardMenuProps {
   id: number
@@ -19,55 +18,8 @@ interface cardMenuProps {
 }
 
 export default function Home() {
-
+  const { t } = useTranslation();
   const [menuData, setMenuData] = useState<cardMenuProps[] | null>(null)
-
-  /*   const menuDb: cardMenuProps[] = [
-      {
-        id: 1,
-        label: 'Informações de Vôo',
-        backgroundColor: '#1C1611',
-        textColor: '#D0DF00',
-        icon: 'https://storage.googleapis.com/media.landbot.io/79288/chats/494a361c-2ddc-48ff-8dd7-f4e121043d68/HKUG6Y853KVLNTAHIDE3EAJ2BNCQKK8B.svg',
-        ref: '/flights'
-      },
-      {
-        id: 2,
-        label: 'Restaurantes',
-        backgroundColor: '#E30026',
-        textColor: '#FFFFFF',
-        icon: 'https://storage.googleapis.com/media.landbot.io/79288/chats/494a361c-2ddc-48ff-8dd7-f4e121043d68/HKUG6Y853KVLNTAHIDE3EAJ2BNCQKK8B.svg',
-        ref: '/flights'
-  
-      },
-      {
-        id: 3,
-        label: 'Lojas & Serviços',
-        backgroundColor: '#52C2DE',
-        textColor: '#FFFFFF',
-        icon: 'https://storage.googleapis.com/media.landbot.io/79288/chats/494a361c-2ddc-48ff-8dd7-f4e121043d68/ECUMES944WFBRT8L2JLZDH72U6R3PYFT.svg',
-        ref: '/flights'
-  
-      },
-      {
-        id: 4,
-        label: 'Mapa do Aeroporto',
-        backgroundColor: '#004489',
-        textColor: '#FFFFFF',
-        icon: 'https://storage.googleapis.com/media.landbot.io/79288/chats/494a361c-2ddc-48ff-8dd7-f4e121043d68/29YCRU0R1LCLDXPRUOU21069SZR2FBXJ.svg',
-        ref: '/flights'
-  
-      },
-      {
-        id: 5,
-        label: 'Atendente Virtual',
-        backgroundColor: '#8467F4',
-        textColor: '#FFFFFF',
-        icon: 'https://storage.googleapis.com/media.landbot.io/79288/chats/494a361c-2ddc-48ff-8dd7-f4e121043d68/SM1AJXTYWP2KU6OHUYDZ58IUIJKF4F21.svg',
-        ref: '/flights'
-  
-      },
-    ] */
 
   useEffect(() => {
     handleMenuData();
@@ -110,7 +62,7 @@ export default function Home() {
           <Typography variant="h5" fontWeight={'bold'} sx={{
             fontFamily: poppins.style.fontFamily, fontWeight: 800
           }}>
-            Bem-vindo!
+            Bem Vindo
           </Typography>
           <Typography variant="subtitle1" sx={{
             fontFamily: poppins.style.fontFamily, fontWeight: 400,

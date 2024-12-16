@@ -10,6 +10,7 @@ import { Box, Typography } from '@mui/material';
 import { EntitiesProps } from '@/app/(paginas)/[path]/page'
 import Image from 'next/image';
 import { poppins } from '@/app/fonts';
+import Link from 'next/link';
 
 
 interface RestaurantsTableProps {
@@ -22,7 +23,7 @@ const RestaurantsTable: React.FC<RestaurantsTableProps> = ({ restaurantsState })
 
     return (
         <TableContainer sx={{ width: { xs: '100%', sm: '60vw' } }}>
-            <Table sx={{ tableLayout: 'fixed' }}>
+            {/*  <Table sx={{ tableLayout: 'fixed' }}>
 
                 <TableBody>
                     {restaurantsState && restaurantsState.map((restaurant) => (
@@ -44,7 +45,9 @@ const RestaurantsTable: React.FC<RestaurantsTableProps> = ({ restaurantsState })
                                     <Typography sx={{
                                         fontFamily: poppins.style.fontFamily, fontWeight: 600,
                                     }} >
-                                        {restaurant.name}
+                                        <Link href={'/restaurants/restaurant.name'}>
+                                            {restaurant.name}
+                                        </Link>
                                     </Typography>
                                     <Typography sx={{
 
@@ -60,7 +63,7 @@ const RestaurantsTable: React.FC<RestaurantsTableProps> = ({ restaurantsState })
                         </TableRow>
                     ))}
                 </TableBody>
-            </Table>
+            </Table> */}
         </TableContainer>
     );
 }
