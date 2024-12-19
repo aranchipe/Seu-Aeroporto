@@ -5,13 +5,12 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import * as React from 'react';
 import { createContext, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import english from '../../../public/assets/english.png';
 import portuguese from '../../../public/assets/portuguese.png';
 import spain from '../../../public/assets/spain.png';
 import { Language } from '../../utils/translations';
 
-const languages: Record<Language, string> = {
+export const languages: Record<Language, string> = {
   en: 'EUA',
   es: 'Espanha',
   pt: 'Brasil',
@@ -23,21 +22,19 @@ export const LanguageContext = createContext({
 });
 
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
-  const [language, setLanguage] = useState<Language>('pt'); // Define o estado com o tipo correto
+  const [language, setLanguage] = useState<Language>('pt');
 
   return <LanguageContext.Provider value={{ language, setLanguage }}>{children}</LanguageContext.Provider>;
 }
 
 export default function SimplePopper() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const { i18n } = useTranslation();
   const router = useRouter();
   const { language, setLanguage } = React.useContext(LanguageContext);
-  const [popper, setPopper] = useState(false);
 
   const handleLanguageChange = (lang: Language) => {
     return (event: React.MouseEvent<HTMLElement>) => {
-      setLanguage(lang); // Sem erros, pois lang é do tipo 'Language'
+      setLanguage(lang);
       localStorage.setItem('language', lang);
       router.refresh();
     };

@@ -1,5 +1,6 @@
 'use client';
 import CardMenu from '@/components/CardMenu';
+import { Loading } from '@/components/Loading';
 import { CardMenuProps } from '@/interfaces/home';
 import axios from '@/services/axios';
 import { poppins } from '@/styles/theme';
@@ -11,8 +12,10 @@ import { useTranslation } from '../hooks/useTranslation';
 export default function Home() {
   const [menus, setMenus] = useState<CardMenuProps[] | null>(null);
   const { t } = useTranslation();
+  const [loading, setLoading] = useState<boolean>(false);
 
   const getMenus = async () => {
+    setLoading(true);
     try {
       const menuData: CardMenuProps[] = (await axios.get('/menu')).data.sort((a: CardMenuProps, b: CardMenuProps) => {
         return a.order && b.order && a.order - b.order;
@@ -21,6 +24,8 @@ export default function Home() {
       setMenus(menuData);
     } catch (error) {
       console.error('Erro ao buscar menu:', error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -41,6 +46,7 @@ export default function Home() {
         minHeight: '78vh',
       }}
     >
+      {loading && <Loading />}
       <Box
         sx={{
           marginBottom: '4vh',

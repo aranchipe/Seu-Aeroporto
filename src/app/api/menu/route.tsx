@@ -9,7 +9,7 @@ export async function GET() {
     const data = await collection.find({}).toArray();
     return NextResponse.json(data);
   } catch (error) {
-    console.error('Erro ao buscar dados:', error);
-    return NextResponse.json({ error: 'Erro ao buscar dados' }, { status: 500 });
+    console.error('Error fetching data:', error);
+    return NextResponse.json({ error: 'Error fetching data' }, { status: 500 });
   }
 }

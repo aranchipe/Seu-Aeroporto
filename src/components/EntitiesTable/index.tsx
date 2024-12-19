@@ -1,6 +1,7 @@
-import { EntitiesProps } from '@/app/(paginas)/[path]/page';
 import { poppins } from '@/app/fonts';
 import { useTranslation } from '@/hooks/useTranslation';
+import { EntitiesProps } from '@/interfaces/[path]';
+import { isValidTranslationKey } from '@/utils/translationKeyValidation';
 import { Box, CardMedia, Typography } from '@mui/material';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -13,12 +14,28 @@ import * as React from 'react';
 interface RestaurantsTableProps {
   entitiesState: EntitiesProps[] | null;
   path?: string | null;
+  setCardEntityMapOpen?: React.Dispatch<React.SetStateAction<any>>;
+  setOpenMenu?: React.Dispatch<React.SetStateAction<any>>;
+  setEntityName?: React.Dispatch<React.SetStateAction<any>>;
 }
 
-const EntitiesTable: React.FC<RestaurantsTableProps> = ({ entitiesState, path }) => {
+const EntitiesTable: React.FC<RestaurantsTableProps> = ({
+  entitiesState,
+  path,
+  setCardEntityMapOpen,
+  setOpenMenu,
+  setEntityName,
+}) => {
   const { t } = useTranslation();
   return (
-    <TableContainer sx={{ width: { xs: '100%', sm: '60vw' } }}>
+    <TableContainer
+      sx={{
+        width: { xs: '100%', sm: '60vw' },
+        '&::-webkit-scrollbar': {
+          display: 'none',
+        },
+      }}
+    >
       <Table sx={{ tableLayout: 'fixed' }}>
         <TableBody>
           {entitiesState &&
@@ -48,6 +65,12 @@ const EntitiesTable: React.FC<RestaurantsTableProps> = ({ entitiesState, path })
                           sx={{
                             fontFamily: poppins.style.fontFamily,
                             fontWeight: 600,
+                            cursor: 'pointer',
+                          }}
+                          onClick={() => {
+                            setCardEntityMapOpen && setCardEntityMapOpen(true);
+                            setOpenMenu && setOpenMenu(false);
+                            setEntityName && setEntityName(entity.name);
                           }}
                         >
                           {entity.name}
@@ -62,7 +85,11 @@ const EntitiesTable: React.FC<RestaurantsTableProps> = ({ entitiesState, path })
                         color: '#808080',
                         fontSize: '12px',
                       }}
-                    >{`${t(entity.serviceCategories[0])} - ${t(entity.address)}`}</Typography>
+                    >
+                      {isValidTranslationKey(entity.serviceCategories[0]) && isValidTranslationKey(entity.address)
+                        ? `${t(entity.serviceCategories[0])} - ${t(entity.address)}`
+                        : `${entity.serviceCategories[0]} - ${entity.address}`}
+                    </Typography>
                   </Box>
                 </TableCell>
               </TableRow>

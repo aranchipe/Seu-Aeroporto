@@ -5,15 +5,11 @@ import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import Image from 'next/image';
 import React from 'react';
-import logoRight from '../../../public/assets/logo-right.jpg';
 import logoSeuAeroporto from '../../../public/assets/logo-seu-aeroporto.jpg';
+import logoRight from '../../../public/favicon.ico';
 import SimplePopper from '../PopperLanguage';
 
-interface MeuComponenteProps {
-  type: string;
-}
-
-const Bar: React.FC<MeuComponenteProps> = ({ type }) => {
+const Bar: React.FC<{ type: string }> = ({ type }) => {
   const houseIcon =
     'https://storage.googleapis.com/media.landbot.io/79288/chats/494a361c-2ddc-48ff-8dd7-f4e121043d68/M19CXVLFIQ76KENHKVBZ936575H7XO46.svg';
 

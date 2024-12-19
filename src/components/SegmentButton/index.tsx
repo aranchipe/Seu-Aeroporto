@@ -1,17 +1,9 @@
 import { poppins } from '@/app/fonts';
 import { useTranslation } from '@/hooks/useTranslation';
+import { SegmentButtonProps } from '@/interfaces/SegmentButton';
+import { isValidTranslationKey } from '@/utils/translationKeyValidation';
 import { Button } from '@mui/material';
 import React from 'react';
-
-interface SegmentButtonProps {
-  setSegments?: React.Dispatch<React.SetStateAction<string | null>>;
-  /* setMenuPath?: React.Dispatch<React.SetStateAction<string | null>>; */
-  label: string;
-  segments?: string | null;
-  menuType?: string;
-  setOpenMenu?: React.Dispatch<React.SetStateAction<boolean>>;
-  getOptions?: any;
-}
 
 const buttonStyles = {
   base: {
@@ -56,7 +48,7 @@ const SegmentButton: React.FC<SegmentButtonProps> = ({
         ...(segments === label.replace(/s$/, '') ? buttonStyles.active : buttonStyles.inactive),
       }}
     >
-      {t(label)}
+      {isValidTranslationKey(label) ? t(label) : label}
     </Button>
   );
 };

@@ -28,11 +28,11 @@ export default async function connect(): Promise<MongoConnection> {
     cachedClient = client;
     cachedDb = db;
 
-    console.log('Conectado ao MongoDB com sucesso!');
+    console.log('Connected to MongoDB successfully!');
 
     return { db, client };
   } catch (error) {
-    console.error('Erro ao conectar ao MongoDB:', error);
-    throw new Error('Falha na conexão com o MongoDB.');
+    console.error('Error connecting to MongoDB:', error);
+    throw new Error('Error connecting to MongoDB.');
   }
 }
