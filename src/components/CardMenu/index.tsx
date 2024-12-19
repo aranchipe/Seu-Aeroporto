@@ -1,6 +1,7 @@
 import { useTranslation } from '@/hooks/useTranslation';
 import { CardMenuProps } from '@/interfaces/home';
 import { poppins } from '@/styles/theme';
+import { isValidTranslationKey } from '@/utils/translationKeyValidation';
 import { Box, Typography } from '@mui/material';
 import Image from 'next/image';
 import React from 'react';
@@ -47,7 +48,7 @@ const CardMenu: React.FC<CardMenuProps> = ({ label, backgroundColor, textColor, 
           width: size === 'medium' ? { xs: '150px' } : { xs: '80px', sm: '100px' },
         }}
       >
-        {t(label)}
+        {label && isValidTranslationKey(label) ? t(label) : label}
       </Typography>
     </Box>
   );

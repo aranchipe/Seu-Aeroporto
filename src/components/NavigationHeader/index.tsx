@@ -1,15 +1,19 @@
-import { MenuProps } from '@/app/(paginas)/[path]/page';
 import { poppins } from '@/app/fonts';
 import { useTranslation } from '@/hooks/useTranslation';
+import { MenuProps } from '@/interfaces/[path]';
 import axios from '@/services/axios';
+import { isValidTranslationKey } from '@/utils/translationKeyValidation';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { Box, Typography } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
+import { Loading } from '../Loading';
 
 const NavigationHeader: React.FC<{ path: string; label?: string }> = ({ path, label }) => {
   const router = useRouter();
   const [menuData, setMenuData] = useState<MenuProps | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
+
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -17,6 +21,7 @@ const NavigationHeader: React.FC<{ path: string; label?: string }> = ({ path, la
   }, []);
 
   const handleNavigationHeader = async (path: string) => {
+    setLoading(true);
     try {
       const menu: MenuProps[] = (await axios.get('/menu')).data;
 
@@ -28,6 +33,8 @@ const NavigationHeader: React.FC<{ path: string; label?: string }> = ({ path, la
       setMenuData(currentPage);
     } catch (error) {
       console.error('Erro ao buscar menu:', error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -46,6 +53,7 @@ const NavigationHeader: React.FC<{ path: string; label?: string }> = ({ path, la
         zIndex: 10,
       }}
     >
+      {loading && <Loading />}
       <Box
         sx={{
           marginRight: { xs: '4vw', sm: '1.5vw' },
@@ -61,7 +69,11 @@ const NavigationHeader: React.FC<{ path: string; label?: string }> = ({ path, la
           fontWeight: 500,
         }}
       >
-        {label ? t(label) : t(menuData?.label)}
+        {label && isValidTranslationKey(label)
+          ? t(label)
+          : menuData?.label && isValidTranslationKey(menuData?.label)
+          ? t(menuData?.label)
+          : menuData?.label}
       </Typography>
     </Box>
   );

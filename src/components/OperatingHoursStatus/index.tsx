@@ -1,14 +1,10 @@
-import { openingHoursProps } from '@/app/(paginas)/[path]/[entityName]/page';
 import { poppins } from '@/app/fonts';
 import { useTranslation } from '@/hooks/useTranslation';
+import { openingHoursProps } from '@/interfaces/[path]';
 import { Box, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 
-interface PopperOpeningHours {
-  openingHours?: openingHoursProps;
-}
-
-const OperatingHoursStatus: React.FC<PopperOpeningHours> = ({ openingHours }) => {
+const OperatingHoursStatus: React.FC<{ openingHours?: openingHoursProps }> = ({ openingHours }) => {
   const { t } = useTranslation();
   const [statusState, setStatusState] = useState('');
 

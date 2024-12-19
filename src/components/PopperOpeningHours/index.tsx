@@ -1,5 +1,5 @@
-import { openingHoursProps } from '@/app/(paginas)/[path]/[entityName]/page';
 import { poppins } from '@/app/fonts';
+import { openingHoursProps } from '@/interfaces/[path]';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { Button, Typography } from '@mui/material';
 import Box from '@mui/material/Box';
@@ -7,11 +7,7 @@ import Fade from '@mui/material/Fade';
 import Popper from '@mui/material/Popper';
 import * as React from 'react';
 
-interface PopperOpeningHours {
-  openingHours?: openingHoursProps;
-}
-
-const TransitionsPopper: React.FC<PopperOpeningHours> = ({ openingHours }) => {
+const TransitionsPopper: React.FC<{ openingHours?: openingHoursProps }> = ({ openingHours }) => {
   const [open, setOpen] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
@@ -26,7 +22,7 @@ const TransitionsPopper: React.FC<PopperOpeningHours> = ({ openingHours }) => {
   return (
     <div>
       <Button aria-describedby={id} type="button" onClick={handleClick}>
-        <AddCircleOutlineIcon sx={{ width: 20, zIndex: -1 }} />
+        <AddCircleOutlineIcon sx={{ width: 20 }} />
       </Button>
       <Popper id={id} open={open} anchorEl={anchorEl} transition>
         {({ TransitionProps }) => (

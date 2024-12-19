@@ -1,4 +1,5 @@
-import { EntitiesProps } from '@/app/(paginas)/[path]/page';
+import { EntitiesProps } from '@/interfaces/[path]';
+import { Flight } from '@/interfaces/InputFilter';
 import InputAdornment from '@mui/material/InputAdornment';
 import TextField from '@mui/material/TextField';
 import Image from 'next/image';
@@ -10,18 +11,6 @@ interface InputFilterProps {
   placeholder: string;
   options: Flight[] | EntitiesProps[] | null;
   columnName: string;
-}
-
-export interface Flight {
-  id: string;
-  time: string;
-  destination: string;
-  number: string;
-  airlineName: string;
-  airlineLogo: string;
-  status: string;
-  gate: string;
-  mapLink: string;
 }
 
 const InputFilter: React.FC<InputFilterProps> = ({ placeholder, setFilteredOptions, options, columnName }) => {
