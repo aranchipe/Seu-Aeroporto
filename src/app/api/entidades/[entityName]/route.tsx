@@ -1,18 +1,16 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 import connect from '@/libs/mongodb';
 import { NextResponse } from 'next/server';
+
 export async function GET(
   req: Request,
   {
     params,
   }: {
-    params: {
-      entityName: string; // Defina explicitamente o tipo de 'entityName'
-    };
+    params: Promise<Record<string, string>>;
   },
 ) {
   const { db } = await connect();
-  const { entityName } = params;
+  const { entityName } = await params;
   try {
     const collection = db.collection('entidade');
     const data = await collection.find({ name: entityName }).toArray();
