@@ -9,7 +9,7 @@ import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import { Loading } from '../Loading';
 
-const NavigationHeader: React.FC<{ path: string; label?: string }> = ({ path, label }) => {
+const NavigationHeader: React.FC<{ path: string; label?: string; adress?: string }> = ({ path, label, adress }) => {
   const router = useRouter();
   const [menuData, setMenuData] = useState<MenuProps | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
@@ -38,6 +38,12 @@ const NavigationHeader: React.FC<{ path: string; label?: string }> = ({ path, la
     }
   };
 
+  /* const routerBak = () => {
+    if(path) === 'flights' {
+      router.push('/')
+    }
+  } */
+
   return (
     <Box
       sx={{
@@ -59,7 +65,7 @@ const NavigationHeader: React.FC<{ path: string; label?: string }> = ({ path, la
           marginRight: { xs: '4vw', sm: '1.5vw' },
         }}
       >
-        <Box onClick={() => router.back()}>
+        <Box onClick={() => router.push(adress)}>
           <ArrowBackIosIcon sx={{ cursor: 'pointer' }} />
         </Box>
       </Box>

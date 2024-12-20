@@ -51,7 +51,7 @@ const Page = () => {
       {loading && <Loading />}
       {!loading && (
         <>
-          <NavigationHeader path={String(path)} label={entityState?.segments[0]} />
+          <NavigationHeader adress="/services" path={String(path)} label={entityState?.segments[0]} />
           <Box
             sx={{
               width: '100vw',

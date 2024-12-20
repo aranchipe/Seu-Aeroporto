@@ -98,7 +98,7 @@ const Page = () => {
       {loading && <Loading />}
       {!loading && (
         <>
-          <NavigationHeader path={String(path)} />
+          <NavigationHeader adress="/" path={String(path)} />
           <Box
             sx={{
               marginTop: '18vh',
