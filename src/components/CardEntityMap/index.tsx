@@ -49,6 +49,7 @@ const CardEntityMap: React.FC<CardEntityMapProps> = ({ setCardEntityMapOpen, ent
             padding: '16px',
             width: { xs: '80%', sm: '20%' },
             position: 'absolute',
+            color: '#000000CC',
           }}
         >
           <Box sx={{ display: 'flex', alignItems: 'center', gap: '15px' }}>

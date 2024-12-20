@@ -90,6 +90,7 @@ const Bar: React.FC<{ type: string }> = ({ type }) => {
               variant="h4"
               sx={{
                 fontWeight: 500,
+                color: '#000000CC',
               }}
             >
               {`${format(new Date(new Date().getTime() - 3 * 60 * 60 * 1000), 'HH:mm', { locale: ptBR })}`}

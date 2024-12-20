@@ -64,6 +64,7 @@ export default function Home() {
               sx={{
                 fontFamily: poppins.style.fontFamily,
                 fontWeight: 800,
+                color: '#000000',
               }}
             >
               {t('welcome')}
