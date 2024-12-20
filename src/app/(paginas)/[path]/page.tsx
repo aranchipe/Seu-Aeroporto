@@ -25,6 +25,7 @@ const Page: React.FC = () => {
   const params = useParams();
   const { path } = params;
   const { t } = useTranslation();
+
   const [segments, setSegments] = useState<string | null>(path === 'services' ? 'Loja' : '');
 
   const [options, setOptions] = useState<EntitiesProps[] | null>(null);
@@ -32,13 +33,26 @@ const Page: React.FC = () => {
 
   const [currentFlights, setCurrentFlights] = useState(mockFlights);
 
-  const [openMenu, setOpenMenu] = useState<boolean>(false);
-  const [boxPosition, setBoxPosition] = useState<string>('-100%');
-
   const [cardEntityMapOpen, setCardEntityMapOpen] = useState<boolean>(false);
   const [entityName, setEntityName] = useState<EntitiesProps>();
 
   const [loading, setLoading] = useState<boolean>(false);
+
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+
+  const [openMenu, setOpenMenu] = useState<boolean>(false);
+  const [boxPosition, setBoxPosition] = useState<string>('-100%');
+
+  const [tagLabel, setTagLabel] = useState<string>('');
+
+  const handleOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+    setSegments('');
+  };
 
   const getOptions = async (path?: string | string[], segment?: string) => {
     setOptions(null);
@@ -87,194 +101,212 @@ const Page: React.FC = () => {
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [openMenu]);
+  }, [anchorEl]);
 
   return (
     <Box>
       {loading && <Loading />}
-      <NavigationHeader path={String(path)} />
-      <Box
-        sx={{
-          marginTop: '18vh',
-          marginBottom: '10vh',
-          padding: windowSize > 600 ? '3vh 3vw 2vh 3vw' : '3vh 0 0 0',
-          display: 'flex',
-          justifyContent: 'center',
-          minHeight: '72vh',
-        }}
-      >
-        {path === 'flights' ? (
+      {!loading && (
+        <>
+          <NavigationHeader path={String(path)} />
           <Box
             sx={{
+              marginTop: '18vh',
+              marginBottom: '10vh',
+              padding: windowSize > 600 ? '3vh 3vw 2vh 3vw' : '3vh 0 0 0',
               display: 'flex',
-              flexDirection: 'column',
+              justifyContent: 'center',
+              minHeight: '72vh',
             }}
           >
-            <InputFilter
-              columnName={'number'}
-              options={mockFlights}
-              setFilteredOptions={setCurrentFlights}
-              placeholder={t('Buscar voo pelo número. Ex:. 2349')}
-            />
-            <FlightsTable currentFlights={currentFlights} />
-          </Box>
-        ) : path === 'restaurants' ? (
-          <Box
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-            }}
-          >
-            <InputFilter
-              columnName={'name'}
-              options={options}
-              setFilteredOptions={setFilteredOptions}
-              placeholder={t('Busque um estabelecimento. Ex:. Spolleto')}
-            />
-            <EntitiesTable path={path} entitiesState={filteredOptions} />
-          </Box>
-        ) : path === 'services' ? (
-          <Box
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-            }}
-          >
-            <Grid container spacing={2} sx={{ marginBottom: { xs: '5vh', sm: '3vh' }, height: '10%' }}>
-              <Grid item xs={6}>
-                <SegmentButton label="Lojas" setSegments={setSegments} segments={segments} />
-              </Grid>
-              <Grid item xs={6}>
-                <SegmentButton label="Serviços" setSegments={setSegments} segments={segments} />
-              </Grid>
-            </Grid>
-            <InputFilter
-              columnName={'name'}
-              options={options}
-              setFilteredOptions={setFilteredOptions}
-              placeholder={t('Busque um estabelecimento. Ex:. Spolleto')}
-            />
-            <EntitiesTable path={path} entitiesState={filteredOptions} />
-          </Box>
-        ) : path === 'map' ? (
-          <Box
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-            }}
-          >
-            <Box>
-              <InputFilter
-                columnName={'name'}
-                options={options}
-                setFilteredOptions={setFilteredOptions}
-                placeholder={t('Busque um estabelecimento. Ex:. Spolleto')}
-              />
-
-              <Grid
-                container
-                spacing={2}
-                sx={{ marginBottom: { xs: '3vh', sm: '5vh' }, height: '10%', position: 'relative' }}
-              >
-                <Grid item xs={6}>
-                  <SegmentButton
-                    label="Restaurantes"
-                    setSegments={setSegments}
-                    segments={segments}
-                    menuType="restaurants"
-                    setOpenMenu={setOpenMenu}
-                    getOptions={getOptions}
-                  />
-                </Grid>
-                <Grid item xs={6}>
-                  <SegmentButton
-                    label="Lojas"
-                    setSegments={setSegments}
-                    segments={segments}
-                    menuType="services"
-                    setOpenMenu={setOpenMenu}
-                    getOptions={getOptions}
-                  />
-                </Grid>
-                <Grid item xs={6}>
-                  <SegmentButton
-                    label="Serviços"
-                    setSegments={setSegments}
-                    segments={segments}
-                    menuType="services"
-                    setOpenMenu={setOpenMenu}
-                    getOptions={getOptions}
-                  />
-                </Grid>
-                <Grid item xs={6}>
-                  <SegmentButton label="Outros" />
-                </Grid>
-              </Grid>
-              {cardEntityMapOpen && (
-                <CardEntityMap setCardEntityMapOpen={setCardEntityMapOpen} entityName={entityName} />
-              )}
-            </Box>
-            {openMenu && (
+            {path === 'flights' ? (
               <Box
                 sx={{
-                  position: 'fixed',
-                  top: boxPosition,
                   display: 'flex',
                   flexDirection: 'column',
-                  mb: '15vh',
-                  alignItems: 'center',
-                  zIndex: 2,
-                  backgroundColor: '#ffffff',
-                  maxHeight: '50vh',
-                  transition: 'top 1s ease-in-out',
                 }}
               >
-                <EntitiesTable
-                  setCardEntityMapOpen={setCardEntityMapOpen}
-                  entitiesState={filteredOptions}
-                  setOpenMenu={setOpenMenu}
-                  setEntityName={setEntityName}
+                <InputFilter
+                  columnName={'number'}
+                  options={mockFlights}
+                  setFilteredOptions={setCurrentFlights}
+                  placeholder={t('Buscar voo pelo número. Ex:. 2349')}
                 />
+                <FlightsTable currentFlights={currentFlights} />
+              </Box>
+            ) : path === 'restaurants' ? (
+              <Box
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                }}
+              >
+                <InputFilter
+                  columnName={'name'}
+                  options={options}
+                  setFilteredOptions={setFilteredOptions}
+                  placeholder={t('Busque um estabelecimento. Ex:. Spolleto')}
+                />
+                <EntitiesTable path={path} entitiesState={filteredOptions} />
+              </Box>
+            ) : path === 'services' ? (
+              <Box
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                }}
+              >
+                <Grid container spacing={2} sx={{ marginBottom: { xs: '5vh', sm: '3vh' }, height: '10%' }}>
+                  <Grid item xs={6}>
+                    <SegmentButton label="Lojas" setSegments={setSegments} segments={segments} />
+                  </Grid>
+                  <Grid item xs={6}>
+                    <SegmentButton label="Serviços" setSegments={setSegments} segments={segments} />
+                  </Grid>
+                </Grid>
+                <InputFilter
+                  columnName={'name'}
+                  options={options}
+                  setFilteredOptions={setFilteredOptions}
+                  placeholder={t('Busque um estabelecimento. Ex:. Spolleto')}
+                />
+                <EntitiesTable path={path} entitiesState={filteredOptions} />
+              </Box>
+            ) : path === 'map' ? (
+              <Box
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                }}
+              >
+                <Box>
+                  <InputFilter
+                    columnName={'name'}
+                    options={options}
+                    setFilteredOptions={setFilteredOptions}
+                    placeholder={t('Busque um estabelecimento. Ex:. Spolleto')}
+                    openMenu={openMenu}
+                    tagLabel={tagLabel}
+                    setOpenMenu={setOpenMenu}
+                    setSegments={setSegments}
+                  />
 
-                <Box
-                  onClick={() => {
-                    setOpenMenu(false);
-                    setSegments('');
-                  }}
-                >
-                  <KeyboardArrowUpIcon sx={{ bottom: '0', cursor: 'pointer' }} />
+                  <Grid
+                    container
+                    spacing={2}
+                    sx={{ marginBottom: { xs: '3vh', sm: '5vh' }, height: '10%', position: 'relative' }}
+                  >
+                    <Grid item xs={6}>
+                      <SegmentButton
+                        label="Restaurantes"
+                        setSegments={setSegments}
+                        segments={segments}
+                        menuType="restaurants"
+                        setOpenMenu={setOpenMenu}
+                        getOptions={getOptions}
+                        setTagLabel={setTagLabel}
+                      />
+                    </Grid>
+                    <Grid item xs={6}>
+                      <SegmentButton
+                        label="Lojas"
+                        setSegments={setSegments}
+                        segments={segments}
+                        menuType="services"
+                        setOpenMenu={setOpenMenu}
+                        getOptions={getOptions}
+                        setTagLabel={setTagLabel}
+                      />
+                    </Grid>
+                    <Grid item xs={6}>
+                      <SegmentButton
+                        label="Serviços"
+                        setSegments={setSegments}
+                        segments={segments}
+                        menuType="services"
+                        setOpenMenu={setOpenMenu}
+                        getOptions={getOptions}
+                        setTagLabel={setTagLabel}
+                      />
+                    </Grid>
+                    <Grid item xs={6}>
+                      <SegmentButton label="Outros" />
+                    </Grid>
+                  </Grid>
+
+                  {cardEntityMapOpen && (
+                    <CardEntityMap
+                      loading={loading}
+                      setCardEntityMapOpen={setCardEntityMapOpen}
+                      entityName={entityName}
+                      setLoading={setLoading}
+                    />
+                  )}
                 </Box>
+                {openMenu && filteredOptions && (
+                  <Box
+                    sx={{
+                      position: 'fixed',
+                      top: boxPosition,
+                      display: 'flex',
+                      flexDirection: 'column',
+                      mb: '15vh',
+                      alignItems: 'center',
+                      zIndex: 2,
+                      backgroundColor: '#ffffff',
+                      maxHeight: '50vh',
+                      transition: 'top 1s ease-in-out',
+                    }}
+                  >
+                    <EntitiesTable
+                      setCardEntityMapOpen={setCardEntityMapOpen}
+                      entitiesState={filteredOptions}
+                      setOpenMenu={setOpenMenu}
+                      setEntityName={setEntityName}
+                    />
+
+                    <Box
+                      onClick={() => {
+                        setOpenMenu(false);
+                        setSegments('');
+                      }}
+                    >
+                      <KeyboardArrowUpIcon sx={{ bottom: '0', cursor: 'pointer' }} />
+                    </Box>
+                  </Box>
+                )}
+
+                <CardMedia
+                  component="img"
+                  image={mapImage}
+                  alt="Restaurant Logo"
+                  sx={{ width: { xs: '100%', sm: '100%' }, borderRadius: '10px', mb: '10vh' }}
+                />
+              </Box>
+            ) : (
+              <Box sx={{ height: '67vh' }}>
+                <iframe
+                  src="https://salvador-airport.strelo.com.br/"
+                  style={
+                    windowSize > 600
+                      ? {
+                          width: '20vw',
+                          height: '100%',
+                          border: 'none',
+                        }
+                      : {
+                          width: '100vw',
+                          height: '100%',
+                          border: 'none',
+                        }
+                  }
+                ></iframe>
               </Box>
             )}
-            <CardMedia
-              component="img"
-              image={mapImage}
-              alt="Restaurant Logo"
-              sx={{ width: windowSize < 600 ? '100%' : '100%', borderRadius: '10px', mb: '10vh' }}
-            />
           </Box>
-        ) : (
-          <Box sx={{ height: '67vh' }}>
-            <iframe
-              src="https://salvador-airport.strelo.com.br/"
-              style={
-                windowSize > 600
-                  ? {
-                      width: '20vw',
-                      height: '100%',
-                      border: 'none',
-                    }
-                  : {
-                      width: '100vw',
-                      height: '100%',
-                      border: 'none',
-                    }
-              }
-            ></iframe>
-          </Box>
-        )}
-      </Box>
+        </>
+      )}
     </Box>
   );
 };

@@ -12,11 +12,12 @@ import Link from 'next/link';
 import * as React from 'react';
 
 interface RestaurantsTableProps {
-  entitiesState: EntitiesProps[] | null;
+  entitiesState?: EntitiesProps[] | null;
   path?: string | null;
   setCardEntityMapOpen?: React.Dispatch<React.SetStateAction<any>>;
   setOpenMenu?: React.Dispatch<React.SetStateAction<any>>;
   setEntityName?: React.Dispatch<React.SetStateAction<any>>;
+  onClose?: () => void;
 }
 
 const EntitiesTable: React.FC<RestaurantsTableProps> = ({
@@ -25,6 +26,7 @@ const EntitiesTable: React.FC<RestaurantsTableProps> = ({
   setCardEntityMapOpen,
   setOpenMenu,
   setEntityName,
+  onClose,
 }) => {
   const { t } = useTranslation();
   return (
@@ -71,6 +73,7 @@ const EntitiesTable: React.FC<RestaurantsTableProps> = ({
                             setCardEntityMapOpen && setCardEntityMapOpen(true);
                             setOpenMenu && setOpenMenu(false);
                             setEntityName && setEntityName(entity.name);
+                            onClose && onClose();
                           }}
                         >
                           {entity.name}

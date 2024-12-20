@@ -21,8 +21,6 @@ const mapImage =
 const gapImage =
   'https://s3-alpha-sig.figma.com/img/1010/7c2a/07db67a613a07fd4539f1be466881c64?Expires=1735516800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=oUsYO~C1XlWkmXYExcK3mHd~88Pw0Lzvy~4INrka4mC6aATSqe3WiqPuemuzeAwQD662~aXz8tf0V~jWGwIcsv5iwIQNBTJzZ7xKu0-vgmM2zpA4EPJ6Ggv1IAgi6dP1G4RQcPkWyaaLI8rf2RRJUQfZdy9lbiUGZUMl3DgqpthOG7n6ZeZMD1Dos2jkwwKoUBIeOTQrmV7VA2VVG7fjJAtqzXT~Ib1TR9dmsevwxJh0cz7CNMg19gmIGOtPhSIWcZGr2SFtHc54SUQMf3tfhBKPrA-nzYoU9PqMPp8U9WvkcJVVyGJAv8h~qw7b5Ypk0ML2sGH1EIkhrgxYr8k2Cw__';
 
-const windowSize = window.innerWidth;
-
 const Page: React.FC = () => {
   const params = useParams();
   const { entityName, path } = params;
@@ -49,138 +47,141 @@ const Page: React.FC = () => {
   return (
     <Box>
       {loading && <Loading />}
-
-      <NavigationHeader path={String(path)} label={entityState?.segments[0]} />
-      <Box
-        sx={{
-          width: '100vw',
-          marginTop: '18vh',
-          marginBottom: '10vh',
-          display: 'flex',
-          flexDirection: 'column',
-          minHeight: '72vh',
-        }}
-      >
-        {entityName === 'GAP' && (
-          <CardMedia component="img" image={gapImage} sx={{ width: '100%', height: { xs: '20vh', sm: '30vh' } }} />
-        )}
-        <Box sx={{ padding: '3vh 3vw 2vh 3vw ' }}>
+      {!loading && (
+        <>
+          <NavigationHeader path={String(path)} label={entityState?.segments[0]} />
           <Box
             sx={{
-              display: 'flex',
-              alignItems: 'center',
-            }}
-          >
-            {entityState?.logo && (
-              <Box sx={{ marginRight: '2vw' }}>
-                <CardMedia
-                  component="img"
-                  image={entityState.logo}
-                  alt="Restaurant Logo"
-                  sx={{ width: '40px', height: '40px', borderRadius: '50%', border: '1px solid #D3D3D3' }}
-                />
-              </Box>
-            )}
-
-            <Typography
-              variant="h5"
-              fontWeight={'bold'}
-              sx={{
-                fontFamily: poppins.style.fontFamily,
-                fontWeight: 600,
-              }}
-            >
-              {entityState?.name}
-            </Typography>
-          </Box>
-
-          <Box sx={{ display: 'flex', flexDirection: 'column', paddingTop: '3vh', marginBottom: '5vh' }}>
-            <Typography
-              variant="h5"
-              fontWeight={'bold'}
-              sx={{
-                fontFamily: poppins.style.fontFamily,
-                fontWeight: 600,
-                fontSize: '16px',
-              }}
-            >
-              {t('Horário de Funcionamento')}
-            </Typography>
-            <Box sx={{ display: 'flex', alignItems: 'center' }}>
-              <OperatingHoursStatus openingHours={entityState?.openingHours} />
-              <TransitionsPopper openingHours={entityState?.openingHours} />
-            </Box>
-          </Box>
-          <Box
-            sx={{
+              width: '100vw',
+              marginTop: '18vh',
+              marginBottom: '10vh',
               display: 'flex',
               flexDirection: 'column',
+              minHeight: '72vh',
             }}
           >
-            <Typography
-              variant="h5"
-              fontWeight={'bold'}
-              sx={{
-                fontFamily: poppins.style.fontFamily,
-                fontWeight: 600,
-                fontSize: '16px',
-              }}
-            >
-              {t('Contatos')}
-            </Typography>
-            <Box
-              sx={{
-                display: 'flex',
-                marginBottom: '5vh',
-                gap: '10px',
-              }}
-            >
-              <CallIcon />
-              <Typography
+            {entityName === 'GAP' && (
+              <CardMedia component="img" image={gapImage} sx={{ width: '100%', height: { xs: '20vh', sm: '30vh' } }} />
+            )}
+            <Box sx={{ padding: '3vh 3vw 2vh 3vw ' }}>
+              <Box
                 sx={{
-                  fontFamily: poppins.style.fontFamily,
-                  fontWeight: 400,
-                  fontSize: '14px',
+                  display: 'flex',
+                  alignItems: 'center',
                 }}
               >
-                {formatPhoneNumber(entityState?.phone ?? '')}
-              </Typography>
-            </Box>
-            <Box sx={{ marginBottom: '3vh' }}>
-              <Typography
-                variant="h5"
-                fontWeight={'bold'}
+                {entityState?.logo && (
+                  <Box sx={{ marginRight: '2vw' }}>
+                    <CardMedia
+                      component="img"
+                      image={entityState.logo}
+                      alt="Restaurant Logo"
+                      sx={{ width: '40px', height: '40px', borderRadius: '50%', border: '1px solid #D3D3D3' }}
+                    />
+                  </Box>
+                )}
+
+                <Typography
+                  variant="h5"
+                  fontWeight={'bold'}
+                  sx={{
+                    fontFamily: poppins.style.fontFamily,
+                    fontWeight: 600,
+                  }}
+                >
+                  {entityState?.name}
+                </Typography>
+              </Box>
+
+              <Box sx={{ display: 'flex', flexDirection: 'column', paddingTop: '3vh', marginBottom: '5vh' }}>
+                <Typography
+                  variant="h5"
+                  fontWeight={'bold'}
+                  sx={{
+                    fontFamily: poppins.style.fontFamily,
+                    fontWeight: 600,
+                    fontSize: '16px',
+                  }}
+                >
+                  {t('Horário de Funcionamento')}
+                </Typography>
+                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                  <OperatingHoursStatus openingHours={entityState?.openingHours} />
+                  <TransitionsPopper openingHours={entityState?.openingHours} />
+                </Box>
+              </Box>
+              <Box
                 sx={{
-                  fontFamily: poppins.style.fontFamily,
-                  fontWeight: 600,
-                  fontSize: '16px',
+                  display: 'flex',
+                  flexDirection: 'column',
                 }}
               >
-                {t('Localização')}
-              </Typography>
-              <Typography
-                sx={{
-                  fontFamily: poppins.style.fontFamily,
-                  fontWeight: 400,
-                  fontSize: '14px',
-                }}
-              >
-                {entityState?.address && isValidTranslationKey(entityState?.address)
-                  ? t(entityState?.address)
-                  : entityState?.address}
-              </Typography>
-            </Box>
-            <Box>
-              <CardMedia
-                component="img"
-                image={mapImage}
-                alt="Restaurant Logo"
-                sx={{ width: windowSize < 600 ? '100%' : '50%', borderRadius: '10px' }}
-              />
+                <Typography
+                  variant="h5"
+                  fontWeight={'bold'}
+                  sx={{
+                    fontFamily: poppins.style.fontFamily,
+                    fontWeight: 600,
+                    fontSize: '16px',
+                  }}
+                >
+                  {t('Contatos')}
+                </Typography>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    marginBottom: '5vh',
+                    gap: '10px',
+                  }}
+                >
+                  <CallIcon />
+                  <Typography
+                    sx={{
+                      fontFamily: poppins.style.fontFamily,
+                      fontWeight: 400,
+                      fontSize: '14px',
+                    }}
+                  >
+                    {formatPhoneNumber(entityState?.phone ?? '')}
+                  </Typography>
+                </Box>
+                <Box sx={{ marginBottom: '3vh' }}>
+                  <Typography
+                    variant="h5"
+                    fontWeight={'bold'}
+                    sx={{
+                      fontFamily: poppins.style.fontFamily,
+                      fontWeight: 600,
+                      fontSize: '16px',
+                    }}
+                  >
+                    {t('Localização')}
+                  </Typography>
+                  <Typography
+                    sx={{
+                      fontFamily: poppins.style.fontFamily,
+                      fontWeight: 400,
+                      fontSize: '14px',
+                    }}
+                  >
+                    {entityState?.address && isValidTranslationKey(entityState?.address)
+                      ? t(entityState?.address)
+                      : entityState?.address}
+                  </Typography>
+                </Box>
+                <Box>
+                  <CardMedia
+                    component="img"
+                    image={mapImage}
+                    alt="Restaurant Logo"
+                    sx={{ width: { xs: '100%', sm: '50%' }, borderRadius: '10px' }}
+                  />
+                </Box>
+              </Box>
             </Box>
           </Box>
-        </Box>
-      </Box>
+        </>
+      )}
     </Box>
   );
 };

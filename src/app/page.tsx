@@ -15,7 +15,6 @@ export default function Home() {
   const [loading, setLoading] = useState<boolean>(false);
 
   const getMenus = async () => {
-    setLoading(true);
     try {
       const menuData: CardMenuProps[] = (await axios.get('/menu')).data.sort((a: CardMenuProps, b: CardMenuProps) => {
         return a.order && b.order && a.order - b.order;
@@ -30,6 +29,8 @@ export default function Home() {
   };
 
   useEffect(() => {
+    setLoading(true);
+
     getMenus();
   }, []);
 
@@ -47,73 +48,65 @@ export default function Home() {
       }}
     >
       {loading && <Loading />}
-      <Box
-        sx={{
-          marginBottom: '4vh',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-        }}
-      >
-        <Typography
-          variant="h5"
-          fontWeight={'bold'}
-          sx={{
-            fontFamily: poppins.style.fontFamily,
-            fontWeight: 800,
-          }}
-        >
-          {t('welcome')}
-        </Typography>
-        <Typography
-          variant="subtitle1"
-          sx={{
-            fontFamily: poppins.style.fontFamily,
-            fontWeight: 400,
-            color: '#000000CC',
-          }}
-        >
-          {t('Como podemos ajuda-lo?')}
-        </Typography>
-      </Box>
-
-      <Grid
-        container
-        spacing={2}
-        sx={{
-          maxWidth: '600px',
-        }}
-      >
-        {menus?.map((item, index) => (
-          <Grid
-            key={item.id || index}
-            item
-            xs={
-              item.ref === '/flights'
-                ? 8
-                : item.ref === '/restaurants'
-                ? 4
-                : item.ref === '/services'
-                ? 4
-                : item.ref === '/map'
-                ? 8
-                : 12
-            }
+      {!loading && menus && menus.length > 0 && (
+        <>
+          <Box
+            sx={{
+              marginBottom: '4vh',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}
           >
-            <Link href={item.ref ?? ''}>
-              <CardMenu
-                label={item.label}
-                backgroundColor={item.backgroundColor}
-                textColor={item.textColor}
-                icon={item.icon}
-                size={
-                  item.ref === '/flights' || item.ref === '/map' ? 'large' : item.ref === '/chatbot' ? 'medium' : ''
-                }
-              />
-            </Link>
+            <Typography
+              variant="h5"
+              fontWeight={'bold'}
+              sx={{
+                fontFamily: poppins.style.fontFamily,
+                fontWeight: 800,
+              }}
+            >
+              {t('welcome')}
+            </Typography>
+            <Typography
+              variant="subtitle1"
+              sx={{
+                fontFamily: poppins.style.fontFamily,
+                fontWeight: 400,
+                color: '#000000CC',
+              }}
+            >
+              {t('Como podemos ajuda-lo?')}
+            </Typography>
+          </Box>
+
+          <Grid
+            container
+            spacing={2}
+            sx={{
+              maxWidth: '600px',
+            }}
+          >
+            {menus?.map((item, index) => (
+              <Grid
+                key={item.id || index}
+                item
+                xs={item.order === 1 ? 8 : item.order === 2 ? 4 : item.order === 3 ? 4 : item.order === 4 ? 8 : 12}
+              >
+                <Link href={item.ref ?? ''}>
+                  <CardMenu
+                    label={item.label}
+                    backgroundColor={item.backgroundColor}
+                    textColor={item.textColor}
+                    icon={item.icon}
+                    size={item.order === 1 || item.order === 4 ? 'large' : item.order === 5 ? 'medium' : ''}
+                  />
+                </Link>
+              </Grid>
+            ))}
           </Grid>
-        ))}
-      </Grid>
+        </>
+      )}
     </Box>
   );
 }

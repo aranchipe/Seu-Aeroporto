@@ -32,16 +32,19 @@ const SegmentButton: React.FC<SegmentButtonProps> = ({
   menuType,
   setOpenMenu,
   getOptions,
+  setTagLabel,
 }) => {
   const { t } = useTranslation();
   return (
     <Button
       onClick={async () => {
+        setTagLabel && setTagLabel(label);
         setSegments && (await setSegments(label.replace(/s$/, '')));
         getOptions && menuType === 'services'
           ? getOptions(menuType, label.replace(/s$/, ''))
           : getOptions && getOptions(menuType);
         setOpenMenu && setOpenMenu(true);
+        console.log(segments);
       }}
       sx={{
         ...buttonStyles.base,
