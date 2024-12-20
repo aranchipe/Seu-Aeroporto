@@ -12,6 +12,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import airplaneLogo from '../../../public/assets/airplaneLogo.svg';
 
 const windowSize = window.innerWidth;
@@ -31,6 +32,7 @@ const StyledTableCell = styled(TableCell)(() => ({
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const FlightsTable = ({ currentFlights }: any) => {
   const { t } = useTranslation();
+  const router = useRouter();
 
   return (
     <TableContainer sx={{ width: { xs: '100%', sm: '60vw' } }} component={Paper}>
@@ -123,6 +125,7 @@ const FlightsTable = ({ currentFlights }: any) => {
                     alignItems: 'center',
                     justifyContent: 'center',
                   }}
+                  onClick={() => router.push('/map')}
                 >
                   <Typography
                     sx={{

@@ -107,6 +107,7 @@ const Page = () => {
               display: 'flex',
               justifyContent: 'center',
               minHeight: '72vh',
+              backgroundColor: '#ffffff',
             }}
           >
             {path === 'flights' ? (
