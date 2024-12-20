@@ -61,6 +61,7 @@ const Page = () => {
               flexDirection: 'column',
               minHeight: '72vh',
               backgroundColor: '#ffffff',
+              color: '#000000',
             }}
           >
             {entityName === 'GAP' && (
