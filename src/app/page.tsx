@@ -13,6 +13,7 @@ export default function Home() {
   const [menus, setMenus] = useState<CardMenuProps[] | null>(null);
   const { t } = useTranslation();
   const [loading, setLoading] = useState<boolean>(false);
+  //teste push
 
   const getMenus = async () => {
     try {
