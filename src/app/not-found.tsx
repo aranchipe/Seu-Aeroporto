@@ -1,4 +1,4 @@
-import { Box, CardMedia } from '@mui/material';
+import { Box } from '@mui/material';
 
 export default function NotFound() {
   return (
@@ -13,7 +13,8 @@ export default function NotFound() {
         gap: 2,
       }}
     >
-      <CardMedia component="img" image="/imgError404.png" sx={{ width: '40%' }} />
+      <h1>teste</h1>
+      {/* <CardMedia component="img" image="/imgError404.png" sx={{ width: '40%' }} /> */}
     </Box>
   );
 }
