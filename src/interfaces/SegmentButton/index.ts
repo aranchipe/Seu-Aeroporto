@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export interface SegmentButtonProps {
-  setSegments?: React.Dispatch<React.SetStateAction<string | null>>;
-  setTagLabel?: React.Dispatch<React.SetStateAction<string>>;
+  setSegment?: (value: string | null) => void;
+  setTagLabel?: (value: string) => void;
   label: string;
-  segments?: string | null;
+  segment?: string | null;
   menuType?: string;
   setOpenMenu?: React.Dispatch<React.SetStateAction<boolean>>;
   getOptions?: any;

@@ -4,14 +4,12 @@ import { poppins } from '@/styles/theme';
 import { isValidTranslationKey } from '@/utils/translationKeyValidation';
 import { Box, Typography } from '@mui/material';
 import Image from 'next/image';
-import React from 'react';
 
-const CardMenu: React.FC<CardMenuProps> = ({ label, backgroundColor, textColor, icon, size, onClick }) => {
+const CardMenu = ({ label, backgroundColor, textColor, icon, size }: CardMenuProps) => {
   const { t } = useTranslation();
 
   return (
     <Box
-      onClick={onClick}
       sx={{
         display: 'flex',
         flexDirection: size !== 'medium' ? 'column' : 'row-reverse',

@@ -14,7 +14,6 @@ export default function NotFound() {
       }}
     >
       <CardMedia component="img" image="/imgError404.png" sx={{ width: '40%' }} />
-         
     </Box>
   );
 }

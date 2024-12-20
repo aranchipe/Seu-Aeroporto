@@ -1,5 +1,5 @@
 import { poppins } from '@/app/fonts';
-import { openingHoursProps } from '@/interfaces/[path]';
+import { HoursProps, openingHoursProps } from '@/interfaces/[path]';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { Button, Typography } from '@mui/material';
 import Box from '@mui/material/Box';
@@ -7,7 +7,11 @@ import Fade from '@mui/material/Fade';
 import Popper from '@mui/material/Popper';
 import * as React from 'react';
 
-const TransitionsPopper: React.FC<{ openingHours?: openingHoursProps }> = ({ openingHours }) => {
+interface TransitionsPopperProps {
+  openingHours?: openingHoursProps;
+}
+
+const TransitionsPopper = ({ openingHours }: TransitionsPopperProps) => {
   const [open, setOpen] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
@@ -64,7 +68,7 @@ const TransitionsPopper: React.FC<{ openingHours?: openingHoursProps }> = ({ ope
                       >
                         <Typography sx={{ fontWeight: 'bold' }}>{translatedDay}</Typography>
                         {hoursArray?.length > 0 ? (
-                          hoursArray.map((hours: any, index: any) => (
+                          hoursArray.map((hours: HoursProps, index: number) => (
                             <Typography key={index}>
                               {index === 0 && hoursArray?.length > 1
                                 ? ` ${hours.open} às ${hours.close} -`

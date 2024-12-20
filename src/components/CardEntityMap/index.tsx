@@ -14,13 +14,13 @@ const qrCode =
   'https://s3-alpha-sig.figma.com/img/307d/1758/58a86e5cfd6282d82effca68cda33c24?Expires=1735516800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=Yqqytd28tuhd7oPtUdvea9Ru2lefLargnLXgipBD6uadMRPLanIsMZZW6ICSa2KvQb43pd1mbORxbcGj2lpN7OHVGlOgzvFLm3PMyE2MlV175OnCgMojLBfe8PIAyTORl1aHZFDfxjm5RYKGmSOew3cSG60BRbAG0QTdekFvKEWH9f6rvf4Y~t3PacFUTeQ3XW0qbi2kmbSqKbt7UaAwbm3cLO2ZMGtt6lV26EoknlQe22T6sfztRzp4UBIMPM3BMXofnOt9lddP30o2P1HaQi5ujySxxrLKADWUq5wybVMX9ay5EQrEFVE~WsKZqKotOhP~z4w6C~TSy-uWDCMEhQ__';
 
 interface CardEntityMapProps {
-  setCardEntityMapOpen: React.Dispatch<React.SetStateAction<any>>;
-  entityName?: EntitiesProps;
+  setCardEntityMapOpen: (value: boolean) => void;
+  entityName?: string;
   loading?: boolean;
-  setLoading?: React.Dispatch<React.SetStateAction<any>>;
+  setLoading?: (value: boolean) => void;
 }
 
-const CardEntityMap: React.FC<CardEntityMapProps> = ({ setCardEntityMapOpen, entityName, loading, setLoading }) => {
+const CardEntityMap: React.FC<CardEntityMapProps> = ({ setCardEntityMapOpen, entityName }) => {
   const [entityState, setEntityState] = useState<EntitiesProps | null>(null);
   const { t } = useTranslation();
 
@@ -30,7 +30,6 @@ const CardEntityMap: React.FC<CardEntityMapProps> = ({ setCardEntityMapOpen, ent
       setEntityState(entity);
     } catch (error) {
       console.error('Erro ao buscar entidade:', error);
-    } finally {
     }
   };
 

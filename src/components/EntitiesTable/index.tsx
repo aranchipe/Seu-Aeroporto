@@ -1,6 +1,6 @@
 import { poppins } from '@/app/fonts';
 import { useTranslation } from '@/hooks/useTranslation';
-import { EntitiesProps } from '@/interfaces/[path]';
+import { EntitiesTableProps } from '@/interfaces/[path]';
 import { isValidTranslationKey } from '@/utils/translationKeyValidation';
 import { Box, CardMedia, Typography } from '@mui/material';
 import Table from '@mui/material/Table';
@@ -9,25 +9,14 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableRow from '@mui/material/TableRow';
 import Link from 'next/link';
-import * as React from 'react';
 
-interface RestaurantsTableProps {
-  entitiesState?: EntitiesProps[] | null;
-  path?: string | null;
-  setCardEntityMapOpen?: React.Dispatch<React.SetStateAction<any>>;
-  setOpenMenu?: React.Dispatch<React.SetStateAction<any>>;
-  setEntityName?: React.Dispatch<React.SetStateAction<any>>;
-  onClose?: () => void;
-}
-
-const EntitiesTable: React.FC<RestaurantsTableProps> = ({
+const EntitiesTable = ({
   entitiesState,
   path,
   setCardEntityMapOpen,
   setOpenMenu,
   setEntityName,
-  onClose,
-}) => {
+}: EntitiesTableProps) => {
   const { t } = useTranslation();
   return (
     <TableContainer
@@ -70,10 +59,9 @@ const EntitiesTable: React.FC<RestaurantsTableProps> = ({
                             cursor: 'pointer',
                           }}
                           onClick={() => {
-                            setCardEntityMapOpen && setCardEntityMapOpen(true);
-                            setOpenMenu && setOpenMenu(false);
-                            setEntityName && setEntityName(entity.name);
-                            onClose && onClose();
+                            setCardEntityMapOpen!(true);
+                            setOpenMenu!(false);
+                            setEntityName!(entity.name);
                           }}
                         >
                           {entity.name}

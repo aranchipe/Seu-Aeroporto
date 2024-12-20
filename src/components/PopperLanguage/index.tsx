@@ -16,9 +16,9 @@ export const languages: Record<Language, string> = {
   pt: 'Brasil',
 };
 
-export const LanguageContext = createContext({
+export const LanguageContext = createContext<{ language: string; setLanguage: (value: Language) => void }>({
   language: 'pt' as Language,
-  setLanguage: (lang: Language) => {},
+  setLanguage: () => {},
 });
 
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
@@ -33,7 +33,7 @@ export default function SimplePopper() {
   const { language, setLanguage } = React.useContext(LanguageContext);
 
   const handleLanguageChange = (lang: Language) => {
-    return (event: React.MouseEvent<HTMLElement>) => {
+    return () => {
       setLanguage(lang);
       localStorage.setItem('language', lang);
       router.refresh();

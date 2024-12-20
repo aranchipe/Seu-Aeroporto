@@ -1,13 +1,13 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import connect from '@/libs/mongodb';
 import { NextResponse } from 'next/server';
-
 export async function GET(
   req: Request,
   {
     params,
   }: {
     params: {
-      entityName: string;
+      entityName: string; // Defina explicitamente o tipo de 'entityName'
     };
   },
 ) {

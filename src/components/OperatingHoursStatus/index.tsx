@@ -4,7 +4,11 @@ import { openingHoursProps } from '@/interfaces/[path]';
 import { Box, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 
-const OperatingHoursStatus: React.FC<{ openingHours?: openingHoursProps }> = ({ openingHours }) => {
+interface OperatingHoursStatusProps {
+  openingHours?: openingHoursProps;
+}
+
+const OperatingHoursStatus = ({ openingHours }: OperatingHoursStatusProps) => {
   const { t } = useTranslation();
   const [statusState, setStatusState] = useState('');
 

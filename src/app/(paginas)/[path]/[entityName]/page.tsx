@@ -13,7 +13,7 @@ import { isValidTranslationKey } from '@/utils/translationKeyValidation';
 import CallIcon from '@mui/icons-material/Call';
 import { Box, CardMedia, Typography } from '@mui/material';
 import { useParams } from 'next/navigation';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const mapImage =
   'https://s3-alpha-sig.figma.com/img/bd3d/f7a9/a95931faaa9535a55f37ca4e104b0d82?Expires=1735516800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=ZFzCrTG3WKuY2DDm1OuUX7nrSoIzvcyaE5DK1iebqvTDssaaL8az77NWcJXO8cM503PhtpEYhdGvEn4v~cuivuFkv41GINBKPzng-8OdKZObG564tLYldWykvFIO9qw~Y0Z40sWe7clugFTbmUZ7PHcCax845T52IaCpXcvra1KRjVaNt9jXmvfEFbiWDYL5Qg-CGWHWlrM83Rc2iSvLhZ~pNwlut8Jg2vSbDlkxWcn2QXA3to~nBKmM~TW8XC~xozj-G3pBtMMuEuqxZlm2-XW9Q15IXg9NLsfw5OVR4t7uUnPVCdeBeZflgS-BuWNGGkyOpPowwMThzNQ3GInNnw';
@@ -21,7 +21,7 @@ const mapImage =
 const gapImage =
   'https://s3-alpha-sig.figma.com/img/1010/7c2a/07db67a613a07fd4539f1be466881c64?Expires=1735516800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=oUsYO~C1XlWkmXYExcK3mHd~88Pw0Lzvy~4INrka4mC6aATSqe3WiqPuemuzeAwQD662~aXz8tf0V~jWGwIcsv5iwIQNBTJzZ7xKu0-vgmM2zpA4EPJ6Ggv1IAgi6dP1G4RQcPkWyaaLI8rf2RRJUQfZdy9lbiUGZUMl3DgqpthOG7n6ZeZMD1Dos2jkwwKoUBIeOTQrmV7VA2VVG7fjJAtqzXT~Ib1TR9dmsevwxJh0cz7CNMg19gmIGOtPhSIWcZGr2SFtHc54SUQMf3tfhBKPrA-nzYoU9PqMPp8U9WvkcJVVyGJAv8h~qw7b5Ypk0ML2sGH1EIkhrgxYr8k2Cw__';
 
-const Page: React.FC = () => {
+const Page = () => {
   const params = useParams();
   const { entityName, path } = params;
   const [entityState, setEntityState] = useState<EntitiesProps | null>(null);
@@ -35,8 +35,10 @@ const Page: React.FC = () => {
   const entityDetail = async () => {
     setLoading(true);
     try {
-      const entity: EntitiesProps = (await axios.get(`/entidades/${entityName}`)).data;
-      setEntityState(entity);
+      if (entityName) {
+        const entity: EntitiesProps = (await axios.get(`/entidades/${entityName}`)).data;
+        setEntityState(entity);
+      }
     } catch (error) {
       console.error('Error when searching for entity:', error);
     } finally {

@@ -14,19 +14,19 @@ import axios from '@/services/axios';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { Box, CardMedia, Grid } from '@mui/material';
 import { useParams } from 'next/navigation';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const mapImage =
   'https://s3-alpha-sig.figma.com/img/bd3d/f7a9/a95931faaa9535a55f37ca4e104b0d82?Expires=1735516800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=ZFzCrTG3WKuY2DDm1OuUX7nrSoIzvcyaE5DK1iebqvTDssaaL8az77NWcJXO8cM503PhtpEYhdGvEn4v~cuivuFkv41GINBKPzng-8OdKZObG564tLYldWykvFIO9qw~Y0Z40sWe7clugFTbmUZ7PHcCax845T52IaCpXcvra1KRjVaNt9jXmvfEFbiWDYL5Qg-CGWHWlrM83Rc2iSvLhZ~pNwlut8Jg2vSbDlkxWcn2QXA3to~nBKmM~TW8XC~xozj-G3pBtMMuEuqxZlm2-XW9Q15IXg9NLsfw5OVR4t7uUnPVCdeBeZflgS-BuWNGGkyOpPowwMThzNQ3GInNnw';
 
 const windowSize = window.innerWidth;
 
-const Page: React.FC = () => {
+const Page = () => {
   const params = useParams();
   const { path } = params;
   const { t } = useTranslation();
 
-  const [segments, setSegments] = useState<string | null>(path === 'services' ? 'Loja' : '');
+  const [segment, setSegment] = useState<string | null>(path === 'services' ? 'Loja' : '');
 
   const [options, setOptions] = useState<EntitiesProps[] | null>(null);
   const [filteredOptions, setFilteredOptions] = useState<EntitiesProps[] | null>(null);
@@ -34,27 +34,17 @@ const Page: React.FC = () => {
   const [currentFlights, setCurrentFlights] = useState(mockFlights);
 
   const [cardEntityMapOpen, setCardEntityMapOpen] = useState<boolean>(false);
-  const [entityName, setEntityName] = useState<EntitiesProps>();
+
+  const [entityName, setEntityName] = useState<string>('');
 
   const [loading, setLoading] = useState<boolean>(false);
-
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
   const [openMenu, setOpenMenu] = useState<boolean>(false);
   const [boxPosition, setBoxPosition] = useState<string>('-100%');
 
   const [tagLabel, setTagLabel] = useState<string>('');
 
-  const handleOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-    setSegments('');
-  };
-
-  const getOptions = async (path?: string | string[], segment?: string) => {
+  const getOptions = async (path: string | string[], segment?: string) => {
     setOptions(null);
     setLoading(true);
     try {
@@ -66,7 +56,7 @@ const Page: React.FC = () => {
       setOptions(entities);
       setFilteredOptions(entities);
     } catch (error) {
-      console.error('Error when searching for restaurants:', error);
+      console.error('Error when searching for options:', error);
     } finally {
       setLoading(false);
     }
@@ -74,9 +64,9 @@ const Page: React.FC = () => {
 
   useEffect(() => {
     if (path && path !== 'map') {
-      getOptions(path, segments || undefined);
+      getOptions(path, segment || undefined);
     }
-  }, [path, segments]);
+  }, [path, segment]);
 
   useEffect(() => {
     if (openMenu) {
@@ -92,7 +82,7 @@ const Page: React.FC = () => {
     const handleScroll = () => {
       if (openMenu) {
         setOpenMenu(false);
-        setSegments('');
+        setSegment('');
       }
     };
 
@@ -101,7 +91,7 @@ const Page: React.FC = () => {
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [anchorEl]);
+  }, [openMenu]);
 
   return (
     <Box>
@@ -158,10 +148,10 @@ const Page: React.FC = () => {
               >
                 <Grid container spacing={2} sx={{ marginBottom: { xs: '5vh', sm: '3vh' }, height: '10%' }}>
                   <Grid item xs={6}>
-                    <SegmentButton label="Lojas" setSegments={setSegments} segments={segments} />
+                    <SegmentButton label="Lojas" setSegment={setSegment} segment={segment} />
                   </Grid>
                   <Grid item xs={6}>
-                    <SegmentButton label="Serviços" setSegments={setSegments} segments={segments} />
+                    <SegmentButton label="Serviços" setSegment={setSegment} segment={segment} />
                   </Grid>
                 </Grid>
                 <InputFilter
@@ -189,7 +179,7 @@ const Page: React.FC = () => {
                     openMenu={openMenu}
                     tagLabel={tagLabel}
                     setOpenMenu={setOpenMenu}
-                    setSegments={setSegments}
+                    setSegment={setSegment}
                   />
 
                   <Grid
@@ -200,8 +190,8 @@ const Page: React.FC = () => {
                     <Grid item xs={6}>
                       <SegmentButton
                         label="Restaurantes"
-                        setSegments={setSegments}
-                        segments={segments}
+                        setSegment={setSegment}
+                        segment={segment}
                         menuType="restaurants"
                         setOpenMenu={setOpenMenu}
                         getOptions={getOptions}
@@ -211,8 +201,8 @@ const Page: React.FC = () => {
                     <Grid item xs={6}>
                       <SegmentButton
                         label="Lojas"
-                        setSegments={setSegments}
-                        segments={segments}
+                        setSegment={setSegment}
+                        segment={segment}
                         menuType="services"
                         setOpenMenu={setOpenMenu}
                         getOptions={getOptions}
@@ -222,8 +212,8 @@ const Page: React.FC = () => {
                     <Grid item xs={6}>
                       <SegmentButton
                         label="Serviços"
-                        setSegments={setSegments}
-                        segments={segments}
+                        setSegment={setSegment}
+                        segment={segment}
                         menuType="services"
                         setOpenMenu={setOpenMenu}
                         getOptions={getOptions}
@@ -240,7 +230,6 @@ const Page: React.FC = () => {
                       loading={loading}
                       setCardEntityMapOpen={setCardEntityMapOpen}
                       entityName={entityName}
-                      setLoading={setLoading}
                     />
                   )}
                 </Box>
@@ -269,7 +258,7 @@ const Page: React.FC = () => {
                     <Box
                       onClick={() => {
                         setOpenMenu(false);
-                        setSegments('');
+                        setSegment('');
                       }}
                     >
                       <KeyboardArrowUpIcon sx={{ bottom: '0', cursor: 'pointer' }} />

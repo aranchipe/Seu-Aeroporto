@@ -1,15 +1,14 @@
 import { poppins } from '@/app/fonts';
 import CloseIcon from '@mui/icons-material/Close';
 import { Box, Typography } from '@mui/material';
-import * as React from 'react';
 
 interface FilterTagProps {
   tagLabel?: string;
-  setOpenMenu?: React.Dispatch<React.SetStateAction<any>>;
-  setSegments?: React.Dispatch<React.SetStateAction<any>>;
+  setOpenMenu: (value: boolean) => void;
+  setSegment: (value: string) => void;
 }
 
-const FilterTag: React.FC<FilterTagProps> = ({ tagLabel, setOpenMenu, setSegments }) => {
+const FilterTag = ({ tagLabel, setOpenMenu, setSegment }: FilterTagProps) => {
   return (
     <Box
       sx={{
@@ -37,16 +36,14 @@ const FilterTag: React.FC<FilterTagProps> = ({ tagLabel, setOpenMenu, setSegment
       </Typography>
       <CloseIcon
         onClick={() => {
-          setOpenMenu && setOpenMenu(false);
-          setSegments && setSegments('');
+          setOpenMenu(false);
+          setSegment('');
         }}
         sx={{
           color: '004489',
           fontSize: 'medium',
           fontWeight: 'bold',
           cursor: 'pointer',
-          /* position: 'absolute',
-          right: '8px', */
         }}
       />
     </Box>

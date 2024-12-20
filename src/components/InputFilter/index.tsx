@@ -1,4 +1,5 @@
-import { EntitiesProps } from '@/interfaces/[path]';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { EntitiesProps, InputFilterProps } from '@/interfaces/[path]';
 import { Flight } from '@/interfaces/InputFilter';
 import InputAdornment from '@mui/material/InputAdornment';
 import TextField from '@mui/material/TextField';
@@ -7,18 +8,7 @@ import * as React from 'react';
 import lupa from '../../../public/assets/lupa.svg';
 import FilterTag from '../FilterTag';
 
-interface InputFilterProps {
-  setFilteredOptions: React.Dispatch<React.SetStateAction<any>>;
-  setOpenMenu?: React.Dispatch<React.SetStateAction<any>>;
-  placeholder: string;
-  options: Flight[] | EntitiesProps[] | null;
-  columnName: string;
-  openMenu?: boolean;
-  tagLabel?: string;
-  setSegments?: React.Dispatch<React.SetStateAction<any>>;
-}
-
-const InputFilter: React.FC<InputFilterProps> = ({
+const InputFilter = ({
   placeholder,
   setFilteredOptions,
   options,
@@ -26,9 +16,9 @@ const InputFilter: React.FC<InputFilterProps> = ({
   openMenu,
   tagLabel,
   setOpenMenu,
-  setSegments,
-}) => {
-  const handleChange: any = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  setSegment,
+}: InputFilterProps) => {
+  const handleChange = (e: React.KeyboardEvent<HTMLInputElement>) => {
     const { value } = e.target as HTMLInputElement;
 
     const normalizeString = (str: string) => {
@@ -40,11 +30,16 @@ const InputFilter: React.FC<InputFilterProps> = ({
         .trim();
     };
 
-    const filteredData: any = options?.filter((item: any) => {
-      return normalizeString(item[`${columnName}`]).includes(normalizeString(value));
+    const filteredData: any = options?.filter((item: Flight | EntitiesProps | null) => {
+      if (item && columnName in item) {
+        return normalizeString(item[columnName as keyof typeof item]).includes(normalizeString(value));
+      }
+      return false;
     });
 
-    setFilteredOptions(filteredData);
+    if (filteredData) {
+      setFilteredOptions(filteredData);
+    }
   };
 
   return (
@@ -62,12 +57,12 @@ const InputFilter: React.FC<InputFilterProps> = ({
 
           endAdornment: (
             <InputAdornment position="end">
-              {openMenu && <FilterTag setSegments={setSegments} setOpenMenu={setOpenMenu} tagLabel={tagLabel} />}
+              {openMenu && <FilterTag setSegment={setSegment} setOpenMenu={setOpenMenu} tagLabel={tagLabel} />}
             </InputAdornment>
           ),
         },
       }}
-      onInput={(e) => handleChange(e)}
+      onInput={handleChange}
     />
   );
 };

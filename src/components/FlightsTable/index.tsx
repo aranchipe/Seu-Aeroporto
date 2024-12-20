@@ -1,5 +1,7 @@
 import { poppins } from '@/app/fonts';
 import { useTranslation } from '@/hooks/useTranslation';
+import { Flight } from '@/interfaces/InputFilter';
+import { isValidTranslationKey } from '@/utils/translationKeyValidation';
 import { Box, Button } from '@mui/material';
 import Paper from '@mui/material/Paper';
 import { styled } from '@mui/material/styles';
@@ -10,12 +12,11 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Image from 'next/image';
-import * as React from 'react';
 import airplaneLogo from '../../../public/assets/airplaneLogo.svg';
 
 const windowSize = window.innerWidth;
 
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
+const StyledTableCell = styled(TableCell)(() => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: '#F4F6F8',
     color: '#004490',
@@ -27,7 +28,8 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   },
 }));
 
-const FlightsTable: React.FC<any> = ({ currentFlights }) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const FlightsTable = ({ currentFlights }: any) => {
   const { t } = useTranslation();
 
   return (
@@ -44,7 +46,7 @@ const FlightsTable: React.FC<any> = ({ currentFlights }) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {currentFlights.map((flight: any) => (
+          {currentFlights.map((flight: Flight) => (
             <TableRow key={flight.id}>
               <StyledTableCell
                 sx={{
@@ -99,7 +101,7 @@ const FlightsTable: React.FC<any> = ({ currentFlights }) => {
                       }
                 }
               >
-                {t(flight.status)}
+                {isValidTranslationKey(flight.status) ? t(flight.status) : flight.status}
               </StyledTableCell>
               <StyledTableCell
                 align="left"

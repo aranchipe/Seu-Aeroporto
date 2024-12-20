@@ -3,7 +3,6 @@ import { useTranslation } from '@/hooks/useTranslation';
 import { SegmentButtonProps } from '@/interfaces/SegmentButton';
 import { isValidTranslationKey } from '@/utils/translationKeyValidation';
 import { Button } from '@mui/material';
-import React from 'react';
 
 const buttonStyles = {
   base: {
@@ -25,30 +24,41 @@ const buttonStyles = {
   },
 };
 
-const SegmentButton: React.FC<SegmentButtonProps> = ({
-  setSegments,
+const SegmentButton = ({
+  setSegment,
   label,
-  segments,
+  segment,
   menuType,
   setOpenMenu,
   getOptions,
   setTagLabel,
-}) => {
+}: SegmentButtonProps) => {
   const { t } = useTranslation();
+
+  const handleClick = () => {
+    setSegment!(label.replace(/s$/, ''));
+    if (getOptions) {
+      if (menuType === 'services') {
+        getOptions(menuType, label.replace(/s$/, ''));
+      } else {
+        getOptions(menuType);
+      }
+    }
+
+    if (setOpenMenu) {
+      setOpenMenu(true);
+    }
+    if (setTagLabel) {
+      setTagLabel(label);
+    }
+  };
+
   return (
     <Button
-      onClick={async () => {
-        setTagLabel && setTagLabel(label);
-        setSegments && (await setSegments(label.replace(/s$/, '')));
-        getOptions && menuType === 'services'
-          ? getOptions(menuType, label.replace(/s$/, ''))
-          : getOptions && getOptions(menuType);
-        setOpenMenu && setOpenMenu(true);
-        console.log(segments);
-      }}
+      onClick={() => handleClick()}
       sx={{
         ...buttonStyles.base,
-        ...(segments === label.replace(/s$/, '') ? buttonStyles.active : buttonStyles.inactive),
+        ...(segment === label.replace(/s$/, '') ? buttonStyles.active : buttonStyles.inactive),
       }}
     >
       {isValidTranslationKey(label) ? t(label) : label}
