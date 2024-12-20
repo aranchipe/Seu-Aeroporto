@@ -2,7 +2,7 @@ import { poppins } from '@/app/fonts';
 import { useTranslation } from '@/hooks/useTranslation';
 import { Flight } from '@/interfaces/InputFilter';
 import { isValidTranslationKey } from '@/utils/translationKeyValidation';
-import { Box, Button } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import Paper from '@mui/material/Paper';
 import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
@@ -109,31 +109,28 @@ const FlightsTable = ({ currentFlights }: any) => {
                   color: '#212B36',
                   fontFamily: poppins.style.fontFamily,
                   fontWeight: 400,
-                  width: '80px',
                 }}
               >
                 {flight.gate}
               </StyledTableCell>
-              <StyledTableCell
-                sx={{
-                  color: '#212B36',
-                  fontFamily: poppins.style.fontFamily,
-                  fontWeight: 400,
-                }}
-              >
+              <StyledTableCell align="left" sx={{ padding: 0 }}>
                 <Button
                   sx={{
-                    all: 'unset',
-                    backgroundColor: '#004490',
-                    padding: '5px',
                     width: '100%',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
+                    backgroundColor: '#004490',
                     color: '#ffffff',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
                   }}
                 >
-                  z
+                  <Typography
+                    sx={{
+                      fontSize: '6px',
+                    }}
+                  >
+                    Ver no mapa
+                  </Typography>
                 </Button>
               </StyledTableCell>
             </TableRow>

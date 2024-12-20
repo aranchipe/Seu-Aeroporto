@@ -92,7 +92,7 @@ const Bar: React.FC<{ type: string }> = ({ type }) => {
                 fontWeight: 500,
               }}
             >
-              {format(new Date(), 'HH:mm')}
+              {`${format(new Date(new Date().getTime() - 3 * 60 * 60 * 1000), 'HH:mm', { locale: ptBR })}`}
             </Typography>
           </Box>
         )}
