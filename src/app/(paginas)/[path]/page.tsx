@@ -159,7 +159,7 @@ const Page = () => {
                   columnName={'name'}
                   options={options}
                   setFilteredOptions={setFilteredOptions}
-                  placeholder={t('Busque um estabelecimento. Ex:. Spolleto')}
+                  placeholder={t('Busque um estabelecimento. Ex:. GAP')}
                 />
                 <EntitiesTable path={path} entitiesState={filteredOptions} />
               </Box>
@@ -176,7 +176,7 @@ const Page = () => {
                     columnName={'name'}
                     options={options}
                     setFilteredOptions={setFilteredOptions}
-                    placeholder={t('Busque um estabelecimento. Ex:. Spolleto')}
+                    placeholder={t('Busque algo pelo aeroporto')}
                     openMenu={openMenu}
                     tagLabel={tagLabel}
                     setOpenMenu={setOpenMenu}

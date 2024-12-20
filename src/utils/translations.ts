@@ -15,6 +15,7 @@ export const translations = {
     Serviços: 'Serviços',
     'Buscar voo pelo número. Ex:. 2349': 'Buscar voo pelo número. Ex:. 2349',
     'Busque um estabelecimento. Ex:. Spolleto': 'Busque um estabelecimento. Ex:. Spolleto',
+    'Busque um estabelecimento. Ex:. GAP': 'Busque um estabelecimento. Ex:. GAP',
     'Como podemos ajuda-lo?': 'Como podemos ajuda-lo?',
     Hora: 'Hora',
     Destino: 'Destino',
@@ -37,6 +38,7 @@ export const translations = {
     Carnes: 'Carnes',
     'Comida Japonesa': 'Comida Japonesa',
     'Comida Saudável': 'Comida Saudável',
+    'Busque algo pelo aeroporto': 'Busque algo pelo aeroporto',
   },
   en: {
     welcome: 'Welcome',
@@ -54,6 +56,7 @@ export const translations = {
     Serviços: 'Services',
     'Buscar voo pelo número. Ex:. 2349': 'Search for flight by number. Ex:. 2349',
     'Busque um estabelecimento. Ex:. Spolleto': 'Search for an establishment. Ex:. Spolleto',
+    'Busque um estabelecimento. Ex:. GAP': 'Search for an establishment. Ex:. GAP',
     'Como podemos ajuda-lo?': 'How can we help you?',
     Hora: 'Time',
     Destino: 'Destination',
@@ -77,6 +80,7 @@ export const translations = {
     Carnes: 'Meat',
     'Comida Japonesa': 'Japanese food',
     'Comida Saudável': 'Healthy Food',
+    'Busque algo pelo aeroporto': 'Find something at the airport',
   },
   es: {
     welcome: 'Bienvenido',
@@ -117,6 +121,8 @@ export const translations = {
     Carnes: 'Carnes',
     'Comida Japonesa': 'Comida Japonesa',
     'Comida Saudável': 'Comida Saludable',
+    'Busque algo pelo aeroporto': 'Encuentra algo en el aeropuerto',
+    'Busque um estabelecimento. Ex:. GAP': 'Buscar un establecimiento. Ex:. GAP',
   },
 };
 
